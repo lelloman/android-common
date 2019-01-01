@@ -5,31 +5,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import com.lelloman.common.LLContext
-import com.lelloman.common.di.qualifiers.ApplicationPackageName
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.NewThreadScheduler
-import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.di.qualifiers.*
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.common.settings.BaseApplicationSettings
-import com.lelloman.common.utils.ActionTokenProvider
-import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.utils.TimeProviderImpl
-import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.utils.UrlValidatorImpl
-import com.lelloman.common.view.BroadcastReceiverWrap
-import com.lelloman.common.view.ContentUriOpener
-import com.lelloman.common.view.FileProvider
-import com.lelloman.common.view.FileProviderImpl
-import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.common.view.MeteredConnectionCheckerImpl
-import com.lelloman.common.view.PicassoWrap
-import com.lelloman.common.view.PicassoWrapImpl
-import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.view.ResourceProviderImpl
-import com.lelloman.common.view.SemanticTimeProvider
-import com.lelloman.common.view.SemanticTimeProviderImpl
+import com.lelloman.common.utils.*
+import com.lelloman.common.view.*
 import com.lelloman.common.viewmodel.BaseViewModel
 import dagger.Module
 import dagger.Provides
@@ -43,6 +25,16 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     fun provideContext(): Context = application
+
+    @Provides
+    @Singleton
+    fun provideApplicationInfoProvider(
+        context: Context,
+        packageManager: PackageManager
+    ) : ApplicationInfoProvider = ApplicationInfoProviderImpl(
+        context = context,
+        packageManager = packageManager
+    )
 
     @Singleton
     @Provides
@@ -134,7 +126,7 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     @ApplicationPackageName
-    fun provideApplicationPackageName(context: Context): String = context.packageName
+    fun provideApplicationPackageName(infoProvider: ApplicationInfoProvider): String = infoProvider.packageName
 
     @Provides
     @Singleton
