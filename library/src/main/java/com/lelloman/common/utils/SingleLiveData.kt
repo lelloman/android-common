@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer
 import android.support.annotation.MainThread
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Deprecated(message = "This implementation is bugged, rewrite it with rx instead of live data.")
 class SingleLiveData<T> : MutableLiveData<T>() {
 
     private val pending = AtomicBoolean(false)
