@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
-import com.lelloman.common.LLContext
 import com.lelloman.common.di.qualifiers.*
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
@@ -134,35 +133,9 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideContentUriOpener(llContext: LLContext): ContentUriOpener = llContext
+    fun provideContentUriOpener(context: Context): ContentUriOpener = ContentUriOpenerImpl(context)
 
     @Provides
     @Singleton
     fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
-
-    @Provides
-    @Singleton
-    fun provideLlContext(
-        context: Context,
-        timeProvider: TimeProvider,
-        @UiScheduler uiScheduler: Scheduler,
-        @IoScheduler ioScheduler: Scheduler,
-        @NewThreadScheduler newThreadScheduler: Scheduler,
-        loggerFactory: LoggerFactory,
-        meteredConnectionChecker: MeteredConnectionChecker,
-        urlValidator: UrlValidator,
-        picassoWrap: PicassoWrap,
-        semanticTimeProvider: SemanticTimeProvider
-    ) = LLContext(
-        context = context,
-        timeProvider = timeProvider,
-        ioScheduler = ioScheduler,
-        uiScheduler = uiScheduler,
-        newThreadScheduler = newThreadScheduler,
-        loggerFactory = loggerFactory,
-        meteredConnectionChecker = meteredConnectionChecker,
-        urlValidator = urlValidator,
-        picassoWrap = picassoWrap,
-        semanticTimeProvider = semanticTimeProvider
-    )
 }

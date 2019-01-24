@@ -26,7 +26,7 @@ class SemanticTimeProviderTest {
 
     private val myTimestamp = 527505620_000L
 
-    val tested = SemanticTimeProviderImpl(
+    private val tested = SemanticTimeProviderImpl(
         timeProvider = timeProvider,
         resourceProvider = MockResourceProvider().apply {
             registerStringArray(R.array.time_quantities, TIME_QUANTITIES)
