@@ -7,14 +7,14 @@ plugins {
 buildscript {
     extra["assert_j_version"] = "3.11.1"
     extra["constraint_layout_version"] = "1.1.3"
-    extra["dagger_version"] = "2.20"
+    extra["dagger_version"] = "2.21"
     extra["kotlin_version"] = "1.3.20"
     extra["lifecycle_version"] = "1.1.1"
     extra["mockito_version"] = "1.6.0"
     extra["picasso_version"] = "2.71828"
     extra["room_version"] = "1.1.1"
     extra["rx_android_version"] = "2.1.0"
-    extra["rx_java_version"] = "2.2.4"
+    extra["rx_java_version"] = "2.2.6"
     extra["support_lib_version"] = "28.0.0"
 
     repositories {
