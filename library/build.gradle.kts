@@ -44,6 +44,7 @@ dependencies {
     val roomVersion = rootProject.extra["room_version"]
     val mockitoVersion = rootProject.extra["mockito_version"]
     val assertJVersion = rootProject.extra["assert_j_version"]
+    val ui_test_utils_version = rootProject.extra["instrumented_test_utils_version"]
 
     // support
     api("com.android.support:appcompat-v7:$supportLibVersion")
@@ -76,5 +77,5 @@ dependencies {
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("android.arch.core:core-testing:$lifecycleVersion")
 
-    androidTestImplementation("com.github.lelloman:android-instrumented-tests-utils:-SNAPSHOT")
+    androidTestImplementation("com.github.lelloman:android-instrumented-tests-utils:$ui_test_utils_version")
 }

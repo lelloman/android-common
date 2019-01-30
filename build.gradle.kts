@@ -16,6 +16,7 @@ buildscript {
     extra["rx_android_version"] = "2.1.0"
     extra["rx_java_version"] = "2.2.6"
     extra["support_lib_version"] = "28.0.0"
+    extra["instrumented_test_utils_version"] = "f8dbd087b8"
 
     repositories {
         google()
