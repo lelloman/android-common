@@ -33,13 +33,9 @@ class NavigationRouter(
     @VisibleForTesting
     fun handleDeepLink(activity: Activity, event: DeepLinkNavigationEvent) {
         val startable = event.deepLink.screen.deepLinkStartable
-        if (startable != null) {
-            startable.start(activity, event.deepLink)
-            if (event is DeepLinkAndCloseNavigationEvent) {
-                activity.finish()
-            }
-        } else {
-            logger.e("Cannot handle deep link screen ${event.deepLink.screen.clazz.qualifiedName} because companion object is not ${DeepLinkStartable::class.java.canonicalName} -> ${event.deepLink}")
+        startable.start(activity, event.deepLink)
+        if (event is DeepLinkAndCloseNavigationEvent) {
+            activity.finish()
         }
     }
 

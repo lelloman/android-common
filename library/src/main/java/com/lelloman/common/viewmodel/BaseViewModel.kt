@@ -18,6 +18,7 @@ import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
@@ -26,7 +27,9 @@ import io.reactivex.subjects.Subject
 @Suppress("MemberVisibilityCanBePrivate", "DeprecatedCallableAddReplaceWith")
 abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
-    private val settings = dependencies.settings
+    protected val settings = dependencies.settings
+    protected val ioScheduler = dependencies.ioScheduler
+    protected val uiScheduler = dependencies.uiScheduler
     private val resourceProvider = dependencies.resourceProvider
     private val actionTokenProvider = dependencies.actionTokenProvider
 
@@ -124,6 +127,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     class Dependencies(
         val settings: BaseApplicationSettings,
         val resourceProvider: ResourceProvider,
-        val actionTokenProvider: ActionTokenProvider
+        val actionTokenProvider: ActionTokenProvider,
+        val ioScheduler: Scheduler,
+        val uiScheduler: Scheduler
     )
 }

@@ -1,6 +1,7 @@
-package com.lelloman.demoapp
+package com.lelloman.demoapp.ui.main
 
 import com.lelloman.common.view.BaseActivity
+import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {

@@ -30,7 +30,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasActionBar = true
     protected open val hasInverseTheme = false
-    protected open val hasBaseLayout = true
+    private val hasBaseLayout get() = layoutResId != NO_LAYOUT_RES_ID
     protected open val hasActionBarBackButton = false
     protected open val hasTransaprentNavigationBar = false
 
@@ -39,8 +39,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private val viewActionEventSubscriptions = CompositeDisposable()
     private val themeChangedEventsSubscriptions = CompositeDisposable()
 
-    @LayoutRes
-    protected open val layoutResId = 0
+    protected abstract val layoutResId: Int
 
     private val logger by lazy { loggerFactory.getLogger(javaClass) }
 
@@ -222,8 +221,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected abstract fun getViewModelClass(): Class<VM>
 
-    private companion object {
-        const val GET_CONTENT_REQUEST_CODE_MASK = 0x100
+    protected companion object {
+        protected const val NO_LAYOUT_RES_ID = 0
+
+        private const val GET_CONTENT_REQUEST_CODE_MASK = 0x100
     }
 
 }
