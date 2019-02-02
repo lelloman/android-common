@@ -14,7 +14,7 @@ class PrintWriterLogger(
 
     override fun i(msg: String) = writeMessage(msg, "I")
 
-    override fun d(msg: String) = writeMessage(msg, "D")
+    override fun d(msg: String, throwable: Throwable?) = writeMessage(msg, "D", throwable)
 
     override fun w(msg: String, throwable: Throwable?) = writeMessage(msg, "W", throwable)
 
