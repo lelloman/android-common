@@ -34,6 +34,7 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     private val actionTokenProvider = dependencies.actionTokenProvider
 
     private val subscriptions = CompositeDisposable()
+    private val themeSubscriptions = CompositeDisposable()
 
     private val viewActionEventsSubject: Subject<ViewActionEvent> = PublishSubject.create()
     open val viewActionEvents: Observable<ViewActionEvent> = viewActionEventsSubject.hide()
@@ -49,12 +50,13 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
             .blockingFirst()
         themeSetter(customTheme)
 
-        subscription {
+        themeSubscriptions.clear()
+        themeSubscriptions.add(
             settings
                 .appTheme
                 .filter { it != customTheme }
                 .subscribe(themeChangedActionEventSubject::onNext)
-        }
+        )
     }
 
     open fun onContentPicked(uri: Uri, requestCode: Int) = Unit
@@ -122,6 +124,7 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         subscriptions.dispose()
+        themeSubscriptions.dispose()
     }
 
     class Dependencies(

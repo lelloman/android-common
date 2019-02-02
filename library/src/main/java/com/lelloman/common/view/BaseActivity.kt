@@ -55,6 +55,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        logger.i("onCreate()")
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
         viewModel.onSetupTheme {
@@ -92,12 +93,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         setViewModel(binding, viewModel)
     }
 
+    override fun recreate() {
+        super.recreate()
+        logger.i("recreate()")
+    }
     override fun onStart() {
         super.onStart()
+        logger.i("onStart()")
         viewModel
             .viewActionEvents
             .observeOn(uiScheduler)
             .subscribe {
+                logger.d("Received ViewActionEvent $it")
                 when (it) {
                     is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
                     is ToastEvent -> showToast(it)
@@ -114,13 +121,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     override fun onStop() {
         super.onStop()
+        logger.i("onStop")
         viewActionEventSubscriptions.clear()
         viewModel.onViewHidden()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        themeChangedEventsSubscriptions.clear()
+        logger.i("onDestroy()")
+        themeChangedEventsSubscriptions.dispose()
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)
