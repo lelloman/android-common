@@ -1,7 +1,6 @@
 package com.lelloman.common.view
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -38,6 +37,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private val pendingActivityResultCodes = mutableSetOf<Int>()
 
     private val viewActionEventSubscriptions = CompositeDisposable()
+    private val themeChangedEventsSubscriptions = CompositeDisposable()
 
     @LayoutRes
     protected open val layoutResId = 0
@@ -67,7 +67,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         if (hasTransaprentNavigationBar) {
             theme.applyStyle(R.style.TransparentActivityWithWallpaper, true)
         }
-        viewModel.themeChangedEvents.observe(this, Observer { recreate() })
+        viewModel
+            .themeChangedEvents
+            .observeOn(uiScheduler)
+            .subscribeOn(ioScheduler)
+            .subscribe { recreate() }
+            .also { themeChangedEventsSubscriptions.add(it) }
 
         if (hasBaseLayout) {
             setContentView(R.layout.activity_base)
@@ -112,6 +117,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         super.onStop()
         viewActionEventSubscriptions.clear()
         viewModel.onViewHidden()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        themeChangedEventsSubscriptions.clear()
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)

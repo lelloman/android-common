@@ -2,8 +2,6 @@
 
 package com.lelloman.common.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.net.Uri
 import android.os.Bundle
@@ -37,8 +35,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     private val viewActionEventsSubject: Subject<ViewActionEvent> = PublishSubject.create()
     open val viewActionEvents: Observable<ViewActionEvent> = viewActionEventsSubject.hide()
 
-    private val mutableThemeChangedActionEvent = MutableLiveData<AppTheme>()
-    open val themeChangedEvents: LiveData<AppTheme> = mutableThemeChangedActionEvent
+    private val themeChangedActionEventSubject = PublishSubject.create<AppTheme>()
+    open val themeChangedEvents: Observable<AppTheme> = themeChangedActionEventSubject.hide()
 
     open fun onTokenAction(token: String) = Unit
 
@@ -52,7 +50,7 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
             settings
                 .appTheme
                 .filter { it != customTheme }
-                .subscribe(mutableThemeChangedActionEvent::postValue)
+                .subscribe(themeChangedActionEventSubject::onNext)
         }
     }
 
