@@ -94,13 +94,16 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     open fun onCloseClicked() = navigateBack()
 
-    protected fun shortToast(message: String) =
-        emitViewActionEvent(
-            ToastEvent(
-                message = message,
-                duration = Toast.LENGTH_SHORT
-            )
+    protected fun shortToast(message: String) = toast(message, Toast.LENGTH_SHORT)
+
+    protected fun longToast(message: String) = toast(message, Toast.LENGTH_LONG)
+
+    private fun toast(message: String, duration: Int) = emitViewActionEvent(
+        ToastEvent(
+            message = message,
+            duration = duration
         )
+    )
 
     protected fun longSnack(
         message: String,
