@@ -8,8 +8,8 @@ class AndroidLogger(private val tag: String) : Logger {
         Log.i(tag, msg)
     }
 
-    override fun d(msg: String) {
-        Log.d(tag, msg)
+    override fun d(msg: String, throwable: Throwable?) {
+        Log.d(tag, msg, throwable)
     }
 
     override fun w(msg: String, throwable: Throwable?) {
