@@ -112,11 +112,15 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideBaseViewModelDependencies(
         baseApplicationSettings: BaseApplicationSettings,
         resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider
+        actionTokenProvider: ActionTokenProvider,
+        @UiScheduler uiScheduler: Scheduler,
+        @IoScheduler ioScheduler: Scheduler
     ) = BaseViewModel.Dependencies(
         settings = baseApplicationSettings,
         resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        actionTokenProvider = actionTokenProvider,
+        uiScheduler = uiScheduler,
+        ioScheduler = ioScheduler
     )
 
     @Provides

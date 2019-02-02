@@ -65,14 +65,14 @@ abstract class BaseRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseListIte
 
         init {
             if (onClickListener != null) {
-                binding.root.setOnClickListener { onClickListener.invoke(item) }
+                binding.root.setOnClickListener { onClickListener(item) }
             }
         }
 
         fun bind(item: M) {
             this.item = item
             viewModel.bind(item)
-            viewModelBinder.invoke(binding, viewModel)
+            viewModelBinder(binding, viewModel)
             binding.executePendingBindings()
         }
     }
