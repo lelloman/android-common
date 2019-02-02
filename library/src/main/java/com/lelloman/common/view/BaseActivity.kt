@@ -16,14 +16,9 @@ import android.view.View
 import android.widget.Toast
 import com.lelloman.common.R
 import com.lelloman.common.navigation.NavigationEvent
-import com.lelloman.common.view.actionevent.AnimationViewActionEvent
-import com.lelloman.common.view.actionevent.PickFileActionEvent
-import com.lelloman.common.view.actionevent.ShareFileViewActionEvent
-import com.lelloman.common.view.actionevent.SnackEvent
-import com.lelloman.common.view.actionevent.SwipePageActionEvent
-import com.lelloman.common.view.actionevent.ThemeChangedActionEvent
-import com.lelloman.common.view.actionevent.ToastEvent
+import com.lelloman.common.view.actionevent.*
 import com.lelloman.common.viewmodel.BaseViewModel
+import io.reactivex.disposables.CompositeDisposable
 
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
@@ -41,6 +36,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     protected open val hasTransaprentNavigationBar = false
 
     private val pendingActivityResultCodes = mutableSetOf<Int>()
+
+    private val viewActionEventSubscriptions = CompositeDisposable()
 
     @LayoutRes
     protected open val layoutResId = 0
@@ -70,6 +67,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         if (hasTransaprentNavigationBar) {
             theme.applyStyle(R.style.TransparentActivityWithWallpaper, true)
         }
+        viewModel.themeChangedEvents.observe(this, Observer { recreate() })
 
         if (hasBaseLayout) {
             setContentView(R.layout.activity_base)
@@ -87,20 +85,32 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
         }
 
-        viewModel.viewActionEvents.observe(this, Observer {
-            when (it) {
-                is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
-                is ToastEvent -> showToast(it)
-                is SnackEvent -> showSnack(it)
-                is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
-                is SwipePageActionEvent -> onSwipePageActionEvent(it)
-                is ThemeChangedActionEvent -> recreate()
-                is ShareFileViewActionEvent -> onShareFileViewActionEvent(it)
-                is PickFileActionEvent -> launchPickFileIntent(it)
-            }
-        })
         viewModel.onCreate()
         setViewModel(binding, viewModel)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel
+            .viewActionEvents
+            .observeOn(uiScheduler)
+            .subscribe {
+                when (it) {
+                    is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
+                    is ToastEvent -> showToast(it)
+                    is SnackEvent -> showSnack(it)
+                    is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
+                    is SwipePageActionEvent -> onSwipePageActionEvent(it)
+                    is ShareFileViewActionEvent -> onShareFileViewActionEvent(it)
+                    is PickFileActionEvent -> launchPickFileIntent(it)
+                }
+            }
+            .also { viewActionEventSubscriptions.add(it) }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewActionEventSubscriptions.clear()
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)
