@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.lelloman.common.utils
 
 import android.databinding.BindingAdapter

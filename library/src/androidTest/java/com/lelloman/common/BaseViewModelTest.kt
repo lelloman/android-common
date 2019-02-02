@@ -8,6 +8,7 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.instrumentedtestutils.whenever
+import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -24,7 +25,9 @@ class BaseViewModelTest {
     private val dependencies = BaseViewModel.Dependencies(
         settings = settings,
         resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        actionTokenProvider = actionTokenProvider,
+        ioScheduler = trampoline(),
+        uiScheduler = trampoline()
     )
 
     private val tested = BaseViewModelImpl(dependencies)

@@ -22,6 +22,7 @@ class PagerIndicator @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes), ViewPager.OnPageChangeListener {
 
+    @Suppress("unused")
     var viewPager: ViewPager? = null
         set(value) {
             if (field != value) {

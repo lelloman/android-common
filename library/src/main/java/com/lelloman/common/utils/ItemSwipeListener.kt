@@ -3,6 +3,7 @@ package com.lelloman.common.utils
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 
+@Suppress("unused")
 object ItemSwipeListener {
 
     fun set(recyclerView: RecyclerView, onSwipeListener: (position: Int) -> Unit) {

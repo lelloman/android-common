@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 
 class TimeProviderImplTest {
 
-    val tested = TimeProviderImpl()
+    private val tested = TimeProviderImpl()
 
     @Test
     fun `returns sunday at 9 am`() {

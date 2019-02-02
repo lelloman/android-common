@@ -23,6 +23,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : InjectableActivity() {
 
     protected lateinit var viewModel: VM
+    @Suppress("MemberVisibilityCanBePrivate")
     protected lateinit var binding: DB
 
     private lateinit var coordinatorLayout: CoordinatorLayout
@@ -31,7 +32,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     protected open val hasInverseTheme = false
     private val hasBaseLayout get() = layoutResId != NO_LAYOUT_RES_ID
     protected open val hasActionBarBackButton = false
-    protected open val hasTransaprentNavigationBar = false
+    protected open val hasTransparentNavigationBar = false
 
     private val pendingActivityResultCodes = mutableSetOf<Int>()
 
@@ -42,6 +43,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private val logger by lazy { loggerFactory.getLogger(javaClass) }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected val statusBarHeight: Int
         get() {
             var result = 0
@@ -63,7 +65,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         if (hasInverseTheme) {
             theme.applyStyle(R.style.InverseTheme, true)
         }
-        if (hasTransaprentNavigationBar) {
+        if (hasTransparentNavigationBar) {
             theme.applyStyle(R.style.TransparentActivityWithWallpaper, true)
         }
         viewModel
@@ -83,7 +85,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
         binding.setLifecycleOwner(this)
 
-        if (hasTransaprentNavigationBar) {
+        if (hasTransparentNavigationBar) {
             findViewById<View>(android.R.id.content).apply {
                 setPadding(paddingLeft, statusBarHeight, paddingRight, paddingBottom)
             }
@@ -96,6 +98,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         super.recreate()
         logger.i("recreate()")
     }
+
     override fun onStart() {
         super.onStart()
         logger.i("onStart()")
@@ -220,7 +223,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private fun showSnack(event: SnackEvent) {
         val snack = Snackbar.make(coordinatorLayout, event.message, event.duration)
         if (event.hasAction) {
-            snack.setAction(event.actionLabel) { _ ->
+            snack.setAction(event.actionLabel) {
                 viewModel.onTokenAction(event.actionToken!!)
             }
         }

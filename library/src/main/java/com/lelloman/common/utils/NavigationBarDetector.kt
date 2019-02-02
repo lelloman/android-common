@@ -6,6 +6,7 @@ import android.view.WindowManager
 import com.lelloman.common.utils.model.NavigationBarSpecs
 import com.lelloman.common.utils.model.Position
 
+@Suppress("unused")
 class NavigationBarDetector(private val context: Context) {
 
     private val windowManager by lazy {

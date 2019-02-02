@@ -60,6 +60,7 @@ abstract class BaseRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseListIte
         onClickListener: ((M) -> Unit)? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        @Suppress("MemberVisibilityCanBePrivate")
         lateinit var item: M
         val viewModel: VM = viewModelFactory.invoke(this)
 
