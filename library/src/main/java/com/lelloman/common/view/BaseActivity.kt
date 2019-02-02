@@ -85,7 +85,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
         }
 
-        viewModel.onCreate()
         setViewModel(binding, viewModel)
     }
 
@@ -106,11 +105,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 }
             }
             .also { viewActionEventSubscriptions.add(it) }
+        viewModel.onViewShown()
     }
 
     override fun onStop() {
         super.onStop()
         viewActionEventSubscriptions.clear()
+        viewModel.onViewHidden()
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)

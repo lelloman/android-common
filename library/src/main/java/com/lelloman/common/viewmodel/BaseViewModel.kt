@@ -58,8 +58,9 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     open fun onContentPicked(uri: Uri, requestCode: Int) = Unit
 
-    @Deprecated(message = "To be removed without any replacement.")
-    open fun onCreate() = Unit
+    open fun onViewShown() = Unit
+
+    open fun onViewHidden() = Unit
 
     open fun onSaveInstanceState(bundle: Bundle) = Unit
 
