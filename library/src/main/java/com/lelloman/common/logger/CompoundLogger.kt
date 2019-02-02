@@ -1,5 +1,6 @@
 package com.lelloman.common.logger
 
+@Suppress("unused")
 class CompoundLogger(private vararg val loggers: Logger) : Logger {
     override fun i(msg: String) = loggers.forEach { it.i(msg) }
 

@@ -23,7 +23,7 @@ enum class AppTheme(
 
         fun fromName(name: String): AppTheme =
             if (namesMap.containsKey(name)) {
-                namesMap[name]!!
+                namesMap[name] ?: DEFAULT
             } else {
                 DEFAULT
             }

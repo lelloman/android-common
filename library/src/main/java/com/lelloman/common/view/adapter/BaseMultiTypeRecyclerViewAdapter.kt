@@ -16,6 +16,7 @@ interface ItemType<ID, M : ModelWithId<ID>, VM : BaseListItemViewModel<ID, M>, D
     fun bindViewModel(viewModel: VM, binding: DB, item: M)
 }
 
+@Suppress("unused")
 abstract class BaseMultiTypeRecyclerViewAdapter<ID, M : ModelWithId<ID>>(
     private val onClickListener: ((Any) -> Unit)?,
     private val resourceProvider: ResourceProvider
@@ -35,7 +36,7 @@ abstract class BaseMultiTypeRecyclerViewAdapter<ID, M : ModelWithId<ID>>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ID, M> {
-        val itemType = viewTypesMap[viewType]!!
+        val itemType = viewTypesMap.getValue(viewType)
         val binding = itemType.createBinding(parent)
 
         return ViewHolder(

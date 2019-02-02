@@ -2,12 +2,9 @@ package com.lelloman.common.navigation
 
 import android.net.Uri
 import com.lelloman.common.utils.Base64Util
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
+import java.io.*
 
+@Suppress("unused")
 class DeepLink(val screen: NavigationScreen) {
 
     private val parameters = mutableMapOf<String, Any>()

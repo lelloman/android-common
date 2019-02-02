@@ -4,7 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
-import com.lelloman.common.di.qualifiers.*
+import com.lelloman.common.di.qualifiers.ApplicationPackageName
+import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.NewThreadScheduler
+import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.navigation.NavigationRouter
@@ -67,11 +70,9 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     fun provideNavigationRouter(
-        loggerFactory: LoggerFactory,
         packageManager: PackageManager,
         @ApplicationPackageName packageName: String
     ) = NavigationRouter(
-        loggerFactory = loggerFactory,
         packageManager = packageManager,
         applicationPackageName = packageName
     )

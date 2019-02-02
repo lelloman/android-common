@@ -5,6 +5,7 @@ import java.io.PrintWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("unused")
 class PrintWriterLogger(
     private val tag: String,
     private val timeProvider: TimeProvider,

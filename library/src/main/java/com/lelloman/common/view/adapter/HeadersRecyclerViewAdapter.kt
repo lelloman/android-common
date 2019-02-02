@@ -14,6 +14,7 @@ import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import java.util.*
 
+@Suppress("unused")
 abstract class HeadersRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseListItemViewModel<ID, M>, DB : ViewDataBinding>(
     private val onItemClickListener: ((M) -> Unit)? = null
 ) : RecyclerView.Adapter<HeadersRecyclerViewAdapter<ID, M, VM, DB>.ViewHolder>(), Observer<List<M>> {

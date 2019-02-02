@@ -6,16 +6,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.annotation.VisibleForTesting
-import com.lelloman.common.logger.LoggerFactory
 
 
 class NavigationRouter(
     private val packageManager: PackageManager,
-    private val applicationPackageName: String,
-    loggerFactory: LoggerFactory
+    private val applicationPackageName: String
 ) {
-
-    private val logger = loggerFactory.getLogger(NavigationRouter::class.java)
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when (navigationEvent) {
         is DeepLinkNavigationEvent -> handleDeepLink(activity, navigationEvent)

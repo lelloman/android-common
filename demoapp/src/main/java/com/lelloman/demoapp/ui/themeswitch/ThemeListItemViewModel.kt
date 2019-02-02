@@ -1,6 +1,5 @@
 package com.lelloman.demoapp.ui.themeswitch
 
-import com.lelloman.common.view.AppTheme
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 
 class ThemeListItemViewModel(

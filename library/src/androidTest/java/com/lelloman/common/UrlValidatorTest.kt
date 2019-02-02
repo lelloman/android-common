@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.utils.UrlValidatorImpl
 import org.junit.Test
 
+@Suppress("SpellCheckingInspection")
 class UrlValidatorTest {
 
     private val tested = UrlValidatorImpl()

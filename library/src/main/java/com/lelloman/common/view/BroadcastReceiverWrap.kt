@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
+@Suppress("unused")
 class BroadcastReceiverWrap(private val context: Context) {
 
     private val broadcastsSubject = PublishSubject.create<Intent>()
@@ -18,6 +19,7 @@ class BroadcastReceiverWrap(private val context: Context) {
         }
     }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     fun register(
         dataScheme: String?,
         actions: Array<String>
@@ -28,12 +30,10 @@ class BroadcastReceiverWrap(private val context: Context) {
         })
     }
 
-    @Suppress("unused")
     fun register(actions: Array<String>) = register(
         dataScheme = null,
         actions = actions
     )
 
-    @Suppress("unused")
     fun unregister() = context.unregisterReceiver(broadcastReceiver)
 }
