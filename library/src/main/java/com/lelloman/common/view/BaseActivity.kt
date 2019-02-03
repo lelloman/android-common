@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import com.lelloman.common.R
 import com.lelloman.common.navigation.NavigationEvent
+import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.actionevent.*
 import com.lelloman.common.viewmodel.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -30,7 +31,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasActionBar = true
     protected open val hasInverseTheme = false
-    private val hasBaseLayout get() = layoutResId != NO_LAYOUT_RES_ID
+    protected open val hasBaseLayout = true
+    private val hasLayout get() = layoutResId != NO_LAYOUT_RES_ID
     protected open val hasActionBarBackButton = false
     protected open val hasTransparentNavigationBar = false
 
@@ -75,13 +77,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             .subscribe { recreate() }
             .also { themeChangedEventsSubscriptions.add(it) }
 
-        if (hasBaseLayout) {
+        if (hasBaseLayout && hasLayout) {
             setContentView(R.layout.activity_base)
             setupActionBar()
             coordinatorLayout = findViewById(R.id.coordinator_layout)
             binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
-        } else {
+        } else if (hasLayout) {
             binding = DataBindingUtil.setContentView(this, layoutResId)
+        } else {
+            binding = StubViewDataBinding() as DB
         }
         binding.setLifecycleOwner(this)
 
@@ -90,8 +94,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 setPadding(paddingLeft, statusBarHeight, paddingRight, paddingBottom)
             }
         }
-
-        setViewModel(binding, viewModel)
+        try {
+            setViewModel(binding, viewModel)
+        } catch (exception: Throwable) {
+            throw IllegalStateException(
+                "BaseActivity with no layout must have a StubViewDataBinding binding type.",
+                exception
+            )
+        }
     }
 
     override fun recreate() {
