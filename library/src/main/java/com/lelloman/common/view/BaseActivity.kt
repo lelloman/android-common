@@ -232,8 +232,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected abstract fun getViewModelClass(): Class<VM>
 
-    protected companion object {
-        protected const val NO_LAYOUT_RES_ID = 0
+    companion object {
+        const val NO_LAYOUT_RES_ID = 0
 
         private const val GET_CONTENT_REQUEST_CODE_MASK = 0x100
     }
