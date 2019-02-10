@@ -102,16 +102,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 exception
             )
         }
-    }
 
-    override fun recreate() {
-        super.recreate()
-        logger.i("recreate()")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        logger.i("onStart()")
         viewModel
             .viewActionEvents
             .observeOn(uiScheduler)
@@ -128,19 +119,29 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 }
             }
             .also { viewActionEventSubscriptions.add(it) }
+    }
+
+    override fun recreate() {
+        super.recreate()
+        logger.i("recreate()")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        logger.i("onStart()")
         viewModel.onViewShown()
     }
 
     override fun onStop() {
         super.onStop()
         logger.i("onStop")
-        viewActionEventSubscriptions.clear()
         viewModel.onViewHidden()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         logger.i("onDestroy()")
+        viewActionEventSubscriptions.clear()
         themeChangedEventsSubscriptions.dispose()
     }
 
