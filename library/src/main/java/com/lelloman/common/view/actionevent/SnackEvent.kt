@@ -1,6 +1,6 @@
 package com.lelloman.common.view.actionevent
 
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 
 data class SnackEvent(
     val message: String,

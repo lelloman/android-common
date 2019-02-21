@@ -2,7 +2,7 @@ package com.lelloman.common.view
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.content.pm.PackageInfoCompat
+import androidx.core.content.pm.PackageInfoCompat
 
 interface ApplicationInfoProvider {
     val versionCode: Long

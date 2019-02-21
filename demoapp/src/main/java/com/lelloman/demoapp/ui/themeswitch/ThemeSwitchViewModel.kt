@@ -1,6 +1,6 @@
 package com.lelloman.demoapp.ui.themeswitch
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.viewmodel.BaseViewModel

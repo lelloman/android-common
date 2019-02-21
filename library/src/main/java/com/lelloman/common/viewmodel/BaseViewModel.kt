@@ -2,12 +2,12 @@
 
 package com.lelloman.common.viewmodel
 
-import android.arch.lifecycle.ViewModel
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.widget.Toast
+import androidx.lifecycle.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.navigation.*
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider

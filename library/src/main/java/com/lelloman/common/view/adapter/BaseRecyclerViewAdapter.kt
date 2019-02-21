@@ -1,11 +1,11 @@
 package com.lelloman.common.view.adapter
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.viewmodel.BaseListItemViewModel
