@@ -1,6 +1,6 @@
 package com.lelloman.common.utils
 
-import android.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBinding
 
 @Suppress("unused")
 class StubViewDataBinding : ViewDataBinding(null, null, 0) {

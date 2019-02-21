@@ -1,10 +1,10 @@
 package com.lelloman.common.widget.outsidescrollnotifier
 
 import android.content.Context
-import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.cardview.widget.CardView
 
 class OutsideScrollCardView @JvmOverloads constructor(
     context: Context,

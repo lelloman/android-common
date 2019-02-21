@@ -1,18 +1,18 @@
 package com.lelloman.common.view
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
-import android.support.v4.content.FileProvider
 import android.view.View
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
+import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProviders
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.actionevent.*
@@ -87,7 +87,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         } else {
             binding = StubViewDataBinding() as DB
         }
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         if (hasTransparentNavigationBar) {
             findViewById<View>(android.R.id.content).apply {

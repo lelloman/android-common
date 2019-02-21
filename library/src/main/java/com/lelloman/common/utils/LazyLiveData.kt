@@ -1,6 +1,6 @@
 package com.lelloman.common.utils
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import kotlin.reflect.KProperty
 
 class LazyLiveData<T>(private val initFunction: (() -> Unit)? = null) {

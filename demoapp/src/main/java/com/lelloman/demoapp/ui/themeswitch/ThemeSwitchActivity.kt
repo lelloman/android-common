@@ -3,7 +3,7 @@ package com.lelloman.demoapp.ui.themeswitch
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity

@@ -1,6 +1,6 @@
 package com.lelloman.demoapp.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.demoapp.ui.main.MainViewModel
 import com.lelloman.demoapp.ui.main.MainViewModelImpl

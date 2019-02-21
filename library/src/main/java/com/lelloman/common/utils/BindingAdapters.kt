@@ -2,8 +2,8 @@
 
 package com.lelloman.common.utils
 
-import android.databinding.BindingAdapter
 import android.view.View
+import androidx.databinding.BindingAdapter
 
 object BindingAdapters {
 
