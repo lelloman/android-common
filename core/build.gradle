@@ -57,6 +57,5 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assert_j_version"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
-    androidTestImplementation "com.github.lelloman:android-instrumented-tests-utils:$instrumented_test_utils_version"
-    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    androidTestImplementation project(":androidtestutils")
 }

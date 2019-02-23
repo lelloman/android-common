@@ -1,13 +1,18 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -22,6 +27,5 @@ dependencies {
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation project(':core')
 
-    androidTestImplementation "com.github.lelloman:android-instrumented-tests-utils:$instrumented_test_utils_version"
-    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    androidTestImplementation project(":androidtestutils")
 }
