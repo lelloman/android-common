@@ -1,7 +1,7 @@
 apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
-    
+
     ext {
         app_compat_version = "1.0.2"
         assert_j_version = "3.11.1"
@@ -12,14 +12,15 @@ buildscript {
         lifecycle_version = "2.0.0"
         material_design_version = "1.0.0"
         mockito_version = "1.6.0"
+        okhttp_version = "3.13.1"
         picasso_version = "2.71828"
         recycler_view_version = "1.0.0"
         room_version = "1.1.1"
         rx_android_version = "2.1.1"
         rx_java_version = "2.2.6"
-        support_lib_version = "28.0.0"
+        truth_version = "0.42"
     }
-    
+
     repositories {
         google()
         jcenter()
@@ -55,6 +56,31 @@ dependencyUpdates.resolutionStrategy {
             if (rejected) {
                 selection.reject('Release candidate')
             }
+        }
+    }
+}
+
+subprojects { Project project ->
+
+    boolean isApplication = project.getProperties()["isApplication"]
+    if(isApplication) {
+        apply plugin: 'com.android.application'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+    println("Configure '${project.name}' " + (isApplication ? "application" : "library"))
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-android-extensions'
+    apply plugin: 'kotlin-kapt'
+
+    android {
+        compileSdkVersion 28
+        defaultConfig {
+            minSdkVersion 21
+            targetSdkVersion 28
+            versionCode 1
+            versionName "1.0"
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
     }
 }

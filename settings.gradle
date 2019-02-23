@@ -1,1 +1,1 @@
-include ':library', ':demoapp', ':commonhttp'
+include ':core', ':demoapp', ':http'
