@@ -11,7 +11,7 @@ interface SemanticTimeProvider {
     fun getTimeDiffString(timeUtcMs: Long): String
 }
 
-internal class SemanticTimeProviderImpl(
+class SemanticTimeProviderImpl(
     private val timeProvider: TimeProvider,
     private val resourceProvider: ResourceProvider,
     givenTimeZone: TimeZone = TimeZone.getDefault()

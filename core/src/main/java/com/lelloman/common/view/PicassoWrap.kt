@@ -19,7 +19,7 @@ interface PicassoWrap {
     )
 }
 
-internal class PicassoWrapImpl(
+class PicassoWrapImpl(
     private val useMeteredNetwork: Observable<Boolean>,
     private val meteredConnectionChecker: MeteredConnectionChecker,
     private val requestCreatorProvider: (uri: String) -> RequestCreator = {

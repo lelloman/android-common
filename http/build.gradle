@@ -1,7 +1,6 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8

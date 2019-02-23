@@ -1,4 +1,4 @@
-package com.lelloman.common.testutils
+package com.lelloman.common.jvmtestutils
 
 import android.graphics.drawable.Drawable
 import com.lelloman.common.view.ResourceProvider

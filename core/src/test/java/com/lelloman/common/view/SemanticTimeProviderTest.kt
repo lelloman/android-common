@@ -1,7 +1,7 @@
 package com.lelloman.common.view
 
 import com.lelloman.common.R
-import com.lelloman.common.testutils.MockResourceProvider
+import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.model.DayTime
 import com.lelloman.common.utils.model.Time

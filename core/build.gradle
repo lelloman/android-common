@@ -51,11 +51,8 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation project(":jvmtestutils")
     testImplementation "android.arch.persistence.room:testing:$room_version"
-    testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
-    testImplementation "org.assertj:assertj-core:$assert_j_version"
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
     androidTestImplementation project(":androidtestutils")
 }
