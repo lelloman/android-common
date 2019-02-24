@@ -63,7 +63,6 @@ class FileProviderImplTest {
         assertThat(file2.exists()).isFalse()
     }
 
-
     @Test
     fun deletesAllInternalFiles() {
         val dir1 = File(context.filesDir, "dir1")

@@ -1,5 +1,6 @@
 package com.lelloman.common
 
+import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
@@ -27,7 +28,8 @@ class BaseViewModelTest {
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider,
         ioScheduler = trampoline(),
-        uiScheduler = trampoline()
+        uiScheduler = trampoline(),
+        loggerFactory = LoggerFactoryImpl()
     )
 
     private val tested = BaseViewModelImpl(dependencies)
