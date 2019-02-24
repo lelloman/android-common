@@ -23,16 +23,16 @@ abstract class Screen {
     fun <T : Screen> showsScreen(screenCreator: () -> T): T = screenCreator()
 }
 
-fun <T : Screen> T.wait(seconds: Double) = apply { com.lelloman.instrumentedtestutils.wait(seconds) }
+inline fun <reified T : Screen> T.wait(seconds: Double) = apply { com.lelloman.instrumentedtestutils.wait(seconds) }
 
-fun <T : Screen> T.clickOnViewWithText(@StringRes stringResId: Int) = apply {
+inline fun <reified T : Screen> T.clickOnViewWithText(@StringRes stringResId: Int) = apply {
     ViewActions.clickViewWithText(string(stringResId))
 }
 
-fun <T : Screen> T.rotateLeft() = apply { com.lelloman.instrumentedtestutils.rotateLeft() }
-fun <T : Screen> T.rotateRight() = apply { com.lelloman.instrumentedtestutils.rotateRight() }
-fun <T : Screen> T.rotateNatural() = apply { com.lelloman.instrumentedtestutils.rotateNatural() }
+inline fun <reified T : Screen> T.rotateLeft() = apply { com.lelloman.instrumentedtestutils.rotateLeft() }
+inline fun <reified T : Screen> T.rotateRight() = apply { com.lelloman.instrumentedtestutils.rotateRight() }
+inline fun <reified T : Screen> T.rotateNatural() = apply { com.lelloman.instrumentedtestutils.rotateNatural() }
 
-fun <T : Screen> T.closeKeyboard() = apply { Espresso.closeSoftKeyboard() }
+inline fun <reified T : Screen> T.closeKeyboard() = apply { Espresso.closeSoftKeyboard() }
 
-fun <T : Screen> T.hasText(text: String) = apply { ViewAssertions.checkViewWithTextIsDisplayed(text) }
+inline fun <reified T : Screen> T.hasText(text: String) = apply { ViewAssertions.checkViewWithTextIsDisplayed(text) }
