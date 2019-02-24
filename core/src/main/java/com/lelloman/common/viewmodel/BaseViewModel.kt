@@ -8,6 +8,7 @@ import android.support.annotation.StringRes
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.navigation.*
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
@@ -135,6 +136,7 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         val resourceProvider: ResourceProvider,
         val actionTokenProvider: ActionTokenProvider,
         val ioScheduler: Scheduler,
-        val uiScheduler: Scheduler
+        val uiScheduler: Scheduler,
+        val loggerFactory: LoggerFactory
     )
 }
