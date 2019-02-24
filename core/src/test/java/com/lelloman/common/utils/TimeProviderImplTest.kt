@@ -19,10 +19,12 @@ class TimeProviderImplTest {
 
         val time = tested.getTime(timeMs)
 
-        assertThat(time.weekTime).isEqualTo(WeekTime(
-            dayOfWeek = SUNDAY,
-            hourOfDay = 9
-        ))
+        assertThat(time.weekTime).isEqualTo(
+            WeekTime(
+                dayOfWeek = SUNDAY,
+                hourOfDay = 9
+            )
+        )
     }
 
     @Test
@@ -31,10 +33,12 @@ class TimeProviderImplTest {
 
         val time = tested.getTime(timeMs)
 
-        assertThat(time.weekTime).isEqualTo(WeekTime(
-            dayOfWeek = SATURDAY,
-            hourOfDay = 21
-        ))
+        assertThat(time.weekTime).isEqualTo(
+            WeekTime(
+                dayOfWeek = SATURDAY,
+                hourOfDay = 21
+            )
+        )
     }
 
     @Test
@@ -43,10 +47,12 @@ class TimeProviderImplTest {
 
         val time = tested.getTime(timeMs)
 
-        assertThat(time.weekTime).isEqualTo(WeekTime(
-            dayOfWeek = WEDNESDAY,
-            hourOfDay = 0
-        ))
+        assertThat(time.weekTime).isEqualTo(
+            WeekTime(
+                dayOfWeek = WEDNESDAY,
+                hourOfDay = 0
+            )
+        )
     }
 
     @Test
@@ -55,10 +61,12 @@ class TimeProviderImplTest {
 
         val time = tested.getTime(timeMs)
 
-        assertThat(time.weekTime).isEqualTo(WeekTime(
-            dayOfWeek = TUESDAY,
-            hourOfDay = 12
-        ))
+        assertThat(time.weekTime).isEqualTo(
+            WeekTime(
+                dayOfWeek = TUESDAY,
+                hourOfDay = 12
+            )
+        )
     }
 
     private companion object {

@@ -28,7 +28,7 @@ class ViewModelModule {
     @Provides
     fun provideThemeSwitchViewModel(
         dependencies: BaseViewModel.Dependencies
-    ) : ThemeSwitchViewModel = ThemeSwitchViewModelImpl(
+    ): ThemeSwitchViewModel = ThemeSwitchViewModelImpl(
         dependencies = dependencies
     )
 }

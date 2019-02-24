@@ -11,5 +11,5 @@ open class BaseSettingsModule {
     @Singleton
     @Provides
     open fun provideBaseApplicationSettings(context: Context)
-        : BaseApplicationSettings = BaseApplicationSettingsImpl(context)
+            : BaseApplicationSettings = BaseApplicationSettingsImpl(context)
 }

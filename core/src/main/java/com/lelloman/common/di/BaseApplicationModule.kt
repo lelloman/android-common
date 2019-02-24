@@ -33,7 +33,7 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideApplicationInfoProvider(
         context: Context,
         packageManager: PackageManager
-    ) : ApplicationInfoProvider = ApplicationInfoProviderImpl(
+    ): ApplicationInfoProvider = ApplicationInfoProviderImpl(
         context = context,
         packageManager = packageManager
     )
@@ -79,7 +79,8 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Singleton
     @Provides
-    open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker = MeteredConnectionCheckerImpl(context)
+    open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker =
+        MeteredConnectionCheckerImpl(context)
 
     @Singleton
     @Provides

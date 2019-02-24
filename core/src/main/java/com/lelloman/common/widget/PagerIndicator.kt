@@ -202,7 +202,8 @@ class PagerIndicator @JvmOverloads constructor(
 
             var position = selectedIndicator
             val filledCircleInverseWidth = Math.round(offset * circleRadiusAndMarginTimes2)
-            var filledCircleLeft = circlesRect!!.left + circleRadiusAndMarginTimes2 * position + filledCircleInverseWidth
+            var filledCircleLeft =
+                circlesRect!!.left + circleRadiusAndMarginTimes2 * position + filledCircleInverseWidth
             var filledCircleRight = circlesRect!!.left + circleRadiusAndMarginTimes2 * (position + 1)
 
             filledCircleSrcRect.left = filledCircleInverseWidth

@@ -44,7 +44,11 @@ internal class BaseApplicationSettingsImpl(
         )
 
     private val appThemeProperty = prefs
-        .enumProperty(BaseApplicationSettings.KEY_APP_THEME, BaseApplicationSettings.DEFAULT_APP_THEME, AppTheme.Companion::fromName)
+        .enumProperty(
+            BaseApplicationSettings.KEY_APP_THEME,
+            BaseApplicationSettings.DEFAULT_APP_THEME,
+            AppTheme.Companion::fromName
+        )
 
     override val useMeteredNetwork = useMeteredNetworkProperty.observable
     override val appTheme = appThemeProperty.observable
