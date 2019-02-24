@@ -30,13 +30,16 @@ class HttpClientImpl(
             logger.d("<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms\n${okResponse.headers()}")
             logger.d("response length: ${body.size}")
 
+            val contentType = ContentType.fromHeader(okResponse.header("content-type", null))
+
             HttpResponse(
                 code = okResponse.code(),
                 isSuccessful = okResponse.isSuccessful,
-                body = body
+                body = body,
+                contentType = contentType
             )
-        } catch (exception: Exception) {
-            throw HttpClientException(exception)
+        } catch (throwable: Throwable) {
+            throw HttpClientException(throwable)
         }
     }
 }

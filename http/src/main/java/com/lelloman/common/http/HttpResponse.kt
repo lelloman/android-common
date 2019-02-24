@@ -4,7 +4,8 @@ package com.lelloman.common.http
 data class HttpResponse(
     val code: Int,
     val isSuccessful: Boolean,
-    val body: ByteArray = byteArrayOf()
+    val body: ByteArray = byteArrayOf(),
+    val contentType: ContentType = UnknownContentType()
 ) {
     val stringBody by lazy { String(body) }
 }
