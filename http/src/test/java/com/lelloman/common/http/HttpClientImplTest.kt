@@ -119,6 +119,102 @@ class HttpClientImplTest {
         tester.assertError { it is HttpClientException && it.cause == exception }
     }
 
+    @Test
+    fun `returns application content type`() {
+        val subType = "json"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("application/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is ApplicationContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns audio content type`() {
+        val subType = "mp3"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("audio/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is AudioContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns image content type`() {
+        val subType = "x-icon"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("image/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is ImageContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns message content type`() {
+        val subType = "what"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("message/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is MessageContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns model content type`() {
+        val subType = "what"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("model/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is ModelContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns multipart content type`() {
+        val subType = "what"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("multipart/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is MultipartContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns text content type`() {
+        val subType = "what"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("text/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is TextContentType && it.contentType.subType == subType }
+    }
+
+    @Test
+    fun `returns video content type`() {
+        val subType = "what"
+        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.header("content-type", null)).thenReturn("video/$subType")
+
+        val tester = tested.request(HTTP_REQUEST).test()
+
+        tester.assertNoErrors()
+        tester.assertValue { it.contentType is VideoContentType && it.contentType.subType == subType }
+    }
+
     private companion object {
         val HTTP_REQUEST = HttpRequest("http://www.staceppa.com")
     }
