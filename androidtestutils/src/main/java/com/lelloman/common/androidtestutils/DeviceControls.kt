@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.lelloman.instrumentedtestutils
+package com.lelloman.common.androidtestutils
 
 import android.support.test.uiautomator.UiDevice
 import androidx.test.platform.app.InstrumentationRegistry

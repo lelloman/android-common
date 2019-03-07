@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate", "DeprecatedCallableAddReplaceWith", "unused")
 
-package com.lelloman.instrumentedtestutils
+package com.lelloman.common.androidtestutils
 
 import android.view.View
 import android.widget.ImageView
@@ -17,12 +17,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
-import com.lelloman.common.androidtestutils.checkMatches
-import com.lelloman.common.androidtestutils.viewWithId
-import com.lelloman.common.androidtestutils.viewWithText
-import com.lelloman.instrumentedtestutils.matcher.AtPositionMatcher
-import com.lelloman.instrumentedtestutils.matcher.RecyclerViewCountMatcher
-import com.lelloman.instrumentedtestutils.matcher.SwipeRefreshLayoutMatcher
+import com.lelloman.common.androidtestutils.matcher.AtPositionMatcher
+import com.lelloman.common.androidtestutils.matcher.RecyclerViewCountMatcher
+import com.lelloman.common.androidtestutils.matcher.SwipeRefreshLayoutMatcher
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 

@@ -1,6 +1,6 @@
 @file:Suppress("DeprecatedCallableAddReplaceWith", "unused")
 
-package com.lelloman.instrumentedtestutils
+package com.lelloman.common.androidtestutils
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
@@ -11,8 +11,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.platform.app.InstrumentationRegistry
-import com.lelloman.common.androidtestutils.viewWithId
-import com.lelloman.common.androidtestutils.viewWithText
 
 
 @Deprecated(message = "Use ViewActions instead")

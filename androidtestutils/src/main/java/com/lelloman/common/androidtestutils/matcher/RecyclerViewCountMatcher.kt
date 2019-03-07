@@ -1,4 +1,4 @@
-package com.lelloman.instrumentedtestutils.matcher
+package com.lelloman.common.androidtestutils.matcher
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
