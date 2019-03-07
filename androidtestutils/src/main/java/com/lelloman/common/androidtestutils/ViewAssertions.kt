@@ -17,6 +17,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
+import com.lelloman.common.androidtestutils.checkMatches
+import com.lelloman.common.androidtestutils.viewWithId
+import com.lelloman.common.androidtestutils.viewWithText
 import com.lelloman.instrumentedtestutils.matcher.AtPositionMatcher
 import com.lelloman.instrumentedtestutils.matcher.RecyclerViewCountMatcher
 import com.lelloman.instrumentedtestutils.matcher.SwipeRefreshLayoutMatcher
