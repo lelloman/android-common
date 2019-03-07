@@ -1,12 +1,13 @@
 @file:Suppress("unused")
 
-package com.lelloman.instrumentedtestutils
+package com.lelloman.common.androidtestutils
 
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
 import androidx.test.runner.AndroidJUnitRunner
+import com.github.tmurakami.dexopener.DexOpener
 
 abstract class TestApplicationRunner : AndroidJUnitRunner() {
 
@@ -23,6 +24,7 @@ abstract class TestApplicationRunner : AndroidJUnitRunner() {
         className: String,
         context: Context
     ): Application {
+        DexOpener.install(this)
         return super.newApplication(cl, testAppClassName, context)
     }
 }

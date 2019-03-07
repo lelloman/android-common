@@ -1,5 +1,6 @@
 package com.lelloman.common.http
 
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.http.testutils.MockLoggerFactory
 import com.lelloman.common.http.testutils.MockTimeProvider
 import com.nhaarman.mockito_kotlin.*

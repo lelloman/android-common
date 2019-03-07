@@ -7,7 +7,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -19,6 +18,8 @@ dependencies {
     api "androidx.test:runner:$androidx_test_runner_version"
     api "androidx.test:rules:$androidx_test_rules_version"
     api "org.mockito:mockito-android:$mockito_android_version"
+    api "com.github.tmurakami:dexopener:$dex_opener_version"
+    api "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     api "com.android.support.test.uiautomator:uiautomator-v18:$uiautomator_version"
     api "com.google.truth:truth:$truth_version"
     api "org.assertj:assertj-core:$assert_j_version"

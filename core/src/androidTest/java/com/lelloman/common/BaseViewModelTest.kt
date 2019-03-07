@@ -8,7 +8,7 @@ import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.instrumentedtestutils.whenever
+import com.lelloman.common.androidtestutils.whenever
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test

@@ -3,6 +3,9 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.lelloman'
 
 android {
+    defaultConfig {
+        testInstrumentationRunner 'com.lelloman.common.TestApplicationRunner'
+    }
     lintOptions {
         disable "GradleCompatible", "InvalidPackage"
     }

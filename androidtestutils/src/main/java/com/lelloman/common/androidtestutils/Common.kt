@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.lelloman.instrumentedtestutils
+package com.lelloman.common.androidtestutils
 
 import android.view.View
 import androidx.test.espresso.Espresso
@@ -13,11 +13,13 @@ import org.mockito.Mockito
 import org.mockito.stubbing.OngoingStubbing
 
 
+@Deprecated(message = "Use mockito kotlin instead")
 fun <T> whenever(methodCall: T): OngoingStubbing<T> = Mockito.`when`(methodCall)
 
 @Suppress("UNCHECKED_CAST")
 fun <T> nullAsT(): T = null as T
 
+@Deprecated(message = "Use mockito kotlin instead")
 inline fun <reified T : Any> nonNullAny(): T {
     return Mockito.any(T::class.java) ?: nullAsT()
 }

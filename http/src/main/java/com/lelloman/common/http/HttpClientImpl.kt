@@ -1,10 +1,12 @@
 package com.lelloman.common.http
 
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 
 class HttpClientImpl(
     private val okHttpClient: OkHttpClient,
@@ -16,8 +18,12 @@ class HttpClientImpl(
 
     override fun request(request: HttpRequest): Single<HttpResponse> = Single.fromCallable {
         try {
+            val okRequestBody = request.body?.let {
+                RequestBody.create(null, "")
+            }
             val okRequest = Request.Builder()
                 .url(request.url)
+                .method(request.method.value, okRequestBody)
                 .build()
 
             logger.d("Thread ${Thread.currentThread().name}")

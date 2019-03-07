@@ -11,7 +11,7 @@ android {
 
 dependencies {
     api 'junit:junit:4.12'
-    api "com.nhaarman:mockito-kotlin:$mockito_version"
+    api "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     api "com.google.truth:truth:$truth_version"
     api "org.assertj:assertj-core:$assert_j_version"
     api "androidx.arch.core:core-testing:$lifecycle_version"

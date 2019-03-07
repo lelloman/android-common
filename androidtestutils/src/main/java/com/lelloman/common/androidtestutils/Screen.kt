@@ -23,7 +23,7 @@ abstract class Screen {
     fun <T : Screen> showsScreen(screenCreator: () -> T): T = screenCreator()
 }
 
-inline fun <reified T : Screen> T.wait(seconds: Double) = apply { com.lelloman.instrumentedtestutils.wait(seconds) }
+inline fun <reified T : Screen> T.wait(seconds: Double) = apply { com.lelloman.common.androidtestutils.wait(seconds) }
 
 inline fun <reified T : Screen> T.clickOnViewWithText(@StringRes stringResId: Int) = apply {
     ViewActions.clickViewWithText(string(stringResId))

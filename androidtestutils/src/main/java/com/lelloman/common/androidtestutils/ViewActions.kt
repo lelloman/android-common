@@ -11,6 +11,8 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.platform.app.InstrumentationRegistry
+import com.lelloman.common.androidtestutils.viewWithId
+import com.lelloman.common.androidtestutils.viewWithText
 
 
 @Deprecated(message = "Use ViewActions instead")
