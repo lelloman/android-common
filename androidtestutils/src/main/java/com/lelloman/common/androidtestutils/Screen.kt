@@ -7,8 +7,6 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
-import com.lelloman.instrumentedtestutils.ViewActions
-import com.lelloman.instrumentedtestutils.ViewAssertions
 
 abstract class Screen {
 
@@ -29,9 +27,9 @@ inline fun <reified T : Screen> T.clickOnViewWithText(@StringRes stringResId: In
     ViewActions.clickViewWithText(string(stringResId))
 }
 
-inline fun <reified T : Screen> T.rotateLeft() = apply { com.lelloman.instrumentedtestutils.rotateLeft() }
-inline fun <reified T : Screen> T.rotateRight() = apply { com.lelloman.instrumentedtestutils.rotateRight() }
-inline fun <reified T : Screen> T.rotateNatural() = apply { com.lelloman.instrumentedtestutils.rotateNatural() }
+inline fun <reified T : Screen> T.rotateLeft() = apply { com.lelloman.common.androidtestutils.rotateLeft() }
+inline fun <reified T : Screen> T.rotateRight() = apply { com.lelloman.common.androidtestutils.rotateRight() }
+inline fun <reified T : Screen> T.rotateNatural() = apply { com.lelloman.common.androidtestutils.rotateNatural() }
 
 inline fun <reified T : Screen> T.closeKeyboard() = apply { Espresso.closeSoftKeyboard() }
 
