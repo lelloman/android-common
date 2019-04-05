@@ -1,7 +1,7 @@
 package com.lelloman.common.view
 
 import android.widget.ImageView
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.RequestCreator
 import io.reactivex.subjects.BehaviorSubject
