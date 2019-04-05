@@ -3,9 +3,10 @@ package com.lelloman.common.view
 import com.lelloman.common.R
 import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.utils.model.DayTime
+import com.lelloman.common.utils.model.Date
+import com.lelloman.common.utils.model.DateTime
 import com.lelloman.common.utils.model.Time
-import com.lelloman.common.utils.model.WeekTime
+import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.util.*
@@ -15,13 +16,11 @@ class SemanticTimeProviderTest {
     private var now = 123456789123L
 
     private val timeProvider = object : TimeProvider {
+        override fun getDateTime(utcMs: Long): DateTime = now()
+        override fun getDate(utcMs: Long): Date = now()
         override fun nowUtcMs() = now
-        override fun getTime(utcMs: Long) = Time(
-            weekTime = WeekTime(0, 0),
-            dayTime = DayTime(0, 0)
-        )
-
-        override fun now() = getTime(nowUtcMs())
+        override fun getTime(utcMs: Long): Time = now()
+        override fun now(): DateTime = mock()
     }
 
     private val myTimestamp = 527505620_000L
