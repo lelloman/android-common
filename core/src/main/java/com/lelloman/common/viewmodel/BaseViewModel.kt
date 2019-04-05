@@ -87,13 +87,16 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     protected fun navigateAndClose(navigationScreen: NavigationScreen) =
         emitViewActionEvent(DeepLinkAndCloseNavigationEvent(DeepLink(navigationScreen)))
 
-    protected fun navigateBack() = navigate(CloseScreenNavigationEvent)
+    @Deprecated(message = "Use closeScreen() instead")
+    protected fun navigateBack() = emitViewActionEvent(CloseScreenViewActionEvent)
+
+    protected fun closeScreen() = emitViewActionEvent(CloseScreenViewActionEvent)
 
     protected fun animate(animationViewActionEvent: AnimationViewActionEvent) {
         emitViewActionEvent(animationViewActionEvent)
     }
 
-    open fun onCloseClicked() = navigateBack()
+    open fun onCloseClicked() = closeScreen()
 
     protected fun shortToast(message: String) = toast(message, Toast.LENGTH_SHORT)
 

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
+import com.lelloman.common.navigation.CloseScreenViewActionEvent
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.actionevent.*
@@ -55,6 +56,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             }
             return result
         }
+
+    private var pendingNavigationEvent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +112,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             .subscribe {
                 logger.d("Received ViewActionEvent $it")
                 when (it) {
-                    is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
+                    is NavigationEvent -> {
+                        if (!pendingNavigationEvent) {
+                            navigationRouter.onNavigationEvent(this, it)
+                            pendingNavigationEvent = true
+                        }
+                    }
+                    is CloseScreenViewActionEvent -> finish()
                     is ToastEvent -> showToast(it)
                     is SnackEvent -> showSnack(it)
                     is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
@@ -129,6 +138,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onStart() {
         super.onStart()
         logger.i("onStart()")
+        pendingNavigationEvent = false
         viewModel.onViewShown()
     }
 
