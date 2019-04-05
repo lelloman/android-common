@@ -15,7 +15,6 @@ class NavigationRouter(
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when (navigationEvent) {
         is DeepLinkNavigationEvent -> handleDeepLink(activity, navigationEvent)
-        is CloseScreenNavigationEvent -> activity.finish()
         is ViewIntentNavigationEvent -> {
             val intent = Intent(Intent.ACTION_VIEW)
                 .setData(Uri.parse(navigationEvent.url))
