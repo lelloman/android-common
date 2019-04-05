@@ -1,30 +1,58 @@
 package com.lelloman.common.utils
 
-import com.lelloman.common.utils.model.DayTime
-import com.lelloman.common.utils.model.Time
-import com.lelloman.common.utils.model.WeekTime
+import com.lelloman.common.utils.model.*
+import com.lelloman.common.utils.model.Date
 import java.util.*
+
+interface TimeProvider {
+
+    fun nowUtcMs(): Long
+
+    fun now(): DateTime
+
+    fun getDateTime(utcMs: Long): DateTime
+
+    fun getDate(utcMs: Long): Date
+
+    fun getTime(utcMs: Long): Time
+}
 
 class TimeProviderImpl : TimeProvider {
 
     private val calendar: Calendar = Calendar.getInstance()
 
-    override fun getTime(utcMs: Long): Time {
-        calendar.timeInMillis = utcMs
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        return Time(
-            weekTime = WeekTime(
-                dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK),
-                hourOfDay = hour
-            ),
-            dayTime = DayTime(
-                hour = hour,
-                minute = calendar.get(Calendar.MINUTE)
-            )
+    private val time: Time
+        get() = TimeImpl(
+            hour = calendar.get(Calendar.HOUR_OF_DAY),
+            minute = calendar.get(Calendar.MINUTE),
+            second = calendar.get(Calendar.SECOND)
+        )
+
+    private val date: Date
+        get() = DateImpl(
+            year = calendar.get(Calendar.YEAR),
+            month = calendar.get(Calendar.MONTH),
+            day = calendar.get(Calendar.DATE),
+            dayOfTheWeek = DayOfTheWeek.fromCalendar(calendar)
+        )
+
+    override fun getDateTime(utcMs: Long): DateTime = withCalendarMs(utcMs) {
+        DateTime(
+            time = time,
+            date = date
         )
     }
 
+    override fun getDate(utcMs: Long): Date = withCalendarMs(utcMs, ::date)
+
+    override fun getTime(utcMs: Long): Time = withCalendarMs(utcMs, ::time)
+
     override fun nowUtcMs() = System.currentTimeMillis()
 
-    override fun now() = getTime(nowUtcMs())
+    override fun now() = getDateTime(nowUtcMs())
+
+    private fun <T> withCalendarMs(utcMs: Long, block: () -> T): T {
+        calendar.timeInMillis = utcMs
+        return block()
+    }
 }
