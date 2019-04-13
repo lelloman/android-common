@@ -18,13 +18,11 @@ dependencies {
     compileOnly project(':core')
 
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$okhttp_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
-    testImplementation "com.google.truth:truth:$truth_version"
-    testImplementation project(':core')
+    testImplementation project(':jvmtestutils')
 
     androidTestImplementation project(":androidtestutils")
 }

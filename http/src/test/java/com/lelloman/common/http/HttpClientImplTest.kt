@@ -1,21 +1,27 @@
 package com.lelloman.common.http
 
+import com.lelloman.common.http.internal.HttpClientImpl
 import com.lelloman.common.http.request.HttpRequest
-import com.lelloman.common.http.testutils.MockLoggerFactory
-import com.lelloman.common.http.testutils.MockTimeProvider
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
+import com.lelloman.common.jvmtestutils.MockTimeProvider
 import com.nhaarman.mockitokotlin2.*
 import okhttp3.*
 import org.junit.Test
 
 class HttpClientImplTest {
 
-    private val okHttpResponse: Response = mock()
+    private val okResponseHeaders: Headers = mock {
+        on { toMultimap() }.thenAnswer { emptyMap<String, List<String>>() }
+    }
+    private val okHttpResponse: Response = mock {
+        on { headers() }.thenAnswer { okResponseHeaders }
+    }
     private val okHttpCall: Call = mock {
-        on { execute() }.thenAnswer { _ -> okHttpResponse }
+        on { execute() }.thenAnswer { okHttpResponse }
     }
 
     private val okHttpClient: OkHttpClient = mock {
-        on { newCall(any()) }.thenAnswer { _ -> okHttpCall }
+        on { newCall(any()) }.thenAnswer { okHttpCall }
     }
     private val loggerFactory = MockLoggerFactory()
     private val timeProvider = MockTimeProvider()
