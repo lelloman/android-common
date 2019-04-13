@@ -16,14 +16,26 @@
             tools:context=".ui.main.MainActivity">
 
         <Button
+                android:id="@+id/button_theme_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="THEME SWITCH"
                 android:onClick="@{(_) -> viewModel.onThemeSwitchClicked()}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button_web_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+                android:id="@+id/button_web_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WEBVIEW"
+                android:onClick="@{(_) -> viewModel.onWebViewClicked()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_theme_switch"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

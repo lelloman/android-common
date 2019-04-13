@@ -6,6 +6,7 @@ import com.lelloman.demoapp.ui.main.MainViewModel
 import com.lelloman.demoapp.ui.main.MainViewModelImpl
 import com.lelloman.demoapp.ui.themeswitch.ThemeSwitchViewModel
 import com.lelloman.demoapp.ui.themeswitch.ThemeSwitchViewModelImpl
+import com.lelloman.demoapp.ui.webview.WebViewViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider
@@ -29,6 +30,13 @@ class ViewModelModule {
     fun provideThemeSwitchViewModel(
         dependencies: BaseViewModel.Dependencies
     ): ThemeSwitchViewModel = ThemeSwitchViewModelImpl(
+        dependencies = dependencies
+    )
+
+    @Provides
+    fun provideWebViewViewModel(
+        dependencies: BaseViewModel.Dependencies
+    ) = WebViewViewModel(
         dependencies = dependencies
     )
 }

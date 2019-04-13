@@ -6,4 +6,6 @@ import com.lelloman.demoapp.navigation.DemoAppScreens
 class MainViewModelImpl(dependencies: BaseViewModel.Dependencies) : MainViewModel(dependencies) {
 
     override fun onThemeSwitchClicked() = navigate(DemoAppScreens.THEMES_SWITCH)
+
+    override fun onWebViewClicked() = navigate(DemoAppScreens.WEB_VIEW)
 }

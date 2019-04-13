@@ -1,1 +1,1 @@
-include ':core', ':demoapp', ':http', ':androidtestutils', ':jvmtestutils'
+include ':core', ':demoapp', ':http', ':androidtestutils', ':jvmtestutils', ':webview'
