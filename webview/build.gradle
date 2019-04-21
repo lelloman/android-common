@@ -18,7 +18,7 @@ dependencies {
     compileOnly project(':core')
     compileOnly project(':http')
 
-    implementation "com.squareup.mimecraft:mimecraft:1.1.0"
+    implementation "com.squareup.mimecraft:mimecraft:$mime_craft_version"
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

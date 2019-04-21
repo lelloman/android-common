@@ -14,6 +14,6 @@ dependencies {
     api "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     api "com.google.truth:truth:$truth_version"
     api "org.assertj:assertj-core:$assert_j_version"
-    api "androidx.arch.core:core-testing:$lifecycle_version"
+    api "androidx.arch.core:core-testing:$arch_core_testing_version"
     api project(':core')
 }
