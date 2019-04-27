@@ -29,7 +29,7 @@ class CookedWebView : WebView {
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest): Boolean {
             synchronized(interceptors) {
                 interceptors.forEach {
-                    if (it.interceptUrlLoading(this@CookedWebView, request)) {
+                    if (it.interceptUrlLoading(context, this@CookedWebView, request)) {
                         return true
                     }
                 }
@@ -46,7 +46,7 @@ class CookedWebView : WebView {
                 val iterator = interceptors.iterator()
                 while (iterator.hasNext()) {
                     val interceptor = iterator.next()
-                    val intercepted = interceptor.interceptRequest(this@CookedWebView, webResourceRequest)
+                    val intercepted = interceptor.interceptRequest(context, this@CookedWebView, webResourceRequest)
                     if (intercepted != null) {
                         response = intercepted
                         break

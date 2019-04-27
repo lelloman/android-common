@@ -1,6 +1,10 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
+
+    defaultConfig {
+        testInstrumentationRunner 'com.lelloman.common.webview.TestRunner'
+    }
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
