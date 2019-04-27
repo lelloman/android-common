@@ -1,31 +1,46 @@
 package com.lelloman.common.webview.interceptor
 
+import android.content.Context
 import android.content.Intent
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
-import android.webkit.WebView
 import com.lelloman.common.http.ApplicationContentType
 import com.lelloman.common.http.ContentType
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.http.request.HttpRequestMethod
+import com.lelloman.common.webview.CookedWebView
 import com.lelloman.common.webview.CookedWebViewInterceptor
 
 class PdfInterceptor(private val httpClient: HttpClient) : CookedWebViewInterceptor {
 
-    override fun interceptUrlLoading(webView: WebView, webResourceRequest: WebResourceRequest) = false
+    private var lastLoadedUrl: String? = null
 
-    override fun interceptRequest(webView: WebView, webResourceRequest: WebResourceRequest): WebResourceResponse? {
-        if (webResourceRequest.method == "GET") {
-            val httpResponse = HttpRequest(url = webResourceRequest.url.toString(), method = HttpRequestMethod.HEAD)
+    override fun interceptUrlLoading(
+        context: Context,
+        webView: CookedWebView,
+        webResourceRequest: WebResourceRequest
+    ): Boolean {
+        lastLoadedUrl = webResourceRequest.url.toString()
+        return false
+    }
+
+    override fun interceptRequest(
+        context: Context,
+        webView: CookedWebView,
+        webResourceRequest: WebResourceRequest
+    ): WebResourceResponse? {
+        val url = webResourceRequest.url.toString()
+        if (url == lastLoadedUrl && webResourceRequest.method == "GET") {
+            val httpResponse = HttpRequest(url = url, method = HttpRequestMethod.HEAD)
                 .let(httpClient::request)
                 .onErrorReturn { HttpResponse(0, false) }
                 .blockingGet()
 
             if (httpResponse.isSuccessful && httpResponse.contentType.isPdf()) {
                 val intent = Intent(Intent.ACTION_VIEW).setDataAndType(webResourceRequest.url, "application/pdf")
-                webView.context.startActivity(intent)
+                context.startActivity(intent)
             }
         }
 
