@@ -206,4 +206,18 @@ object ViewAssertions {
                 }
             })))
     }
+
+    fun waitableAssertion(checkCondition: () -> Boolean, performAssertion: () -> Unit, timeOutMs: Long = 10_000) {
+        val startTime = System.currentTimeMillis()
+        val endTime = startTime + timeOutMs
+
+        while (System.currentTimeMillis() != endTime) {
+            if (checkCondition()) {
+                break
+            }
+            Thread.sleep(50)
+        }
+
+        performAssertion()
+    }
 }
