@@ -88,7 +88,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         } else if (hasLayout) {
             binding = DataBindingUtil.setContentView(this, layoutResId)
         } else {
-            binding = StubViewDataBinding() as DB
+            try {
+                @Suppress("UNCHECKED_CAST")
+                binding = StubViewDataBinding() as DB
+            } catch (exception: ClassCastException) {
+                throw IllegalStateException(
+                    "Generic type DB must be StubViewDataBinding if the BaseActivity has no layout.",
+                    exception
+                )
+            }
         }
         binding.lifecycleOwner = this
 
@@ -111,23 +119,32 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             .observeOn(uiScheduler)
             .subscribe {
                 logger.d("Received ViewActionEvent $it")
-                when (it) {
-                    is NavigationEvent -> {
-                        if (!pendingNavigationEvent) {
-                            navigationRouter.onNavigationEvent(this, it)
-                            pendingNavigationEvent = true
-                        }
-                    }
-                    is CloseScreenViewActionEvent -> finish()
-                    is ToastEvent -> showToast(it)
-                    is SnackEvent -> showSnack(it)
-                    is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
-                    is SwipePageActionEvent -> onSwipePageActionEvent(it)
-                    is ShareFileViewActionEvent -> onShareFileViewActionEvent(it)
-                    is PickFileActionEvent -> launchPickFileIntent(it)
-                }
+                onReceivedViewActionEvent(it)
             }
             .also { viewActionEventSubscriptions.add(it) }
+    }
+
+    private fun onReceivedViewActionEvent(viewActionEvent: ViewActionEvent) {
+        when (viewActionEvent) {
+            is NavigationEvent -> {
+                if (!pendingNavigationEvent) {
+                    navigationRouter.onNavigationEvent(this, viewActionEvent)
+                    pendingNavigationEvent = true
+                }
+            }
+            is CloseScreenViewActionEvent -> finish()
+            is ToastEvent -> showToast(viewActionEvent)
+            is SnackEvent -> showSnack(viewActionEvent)
+            is AnimationViewActionEvent -> onAnimationViewActionEvent(viewActionEvent)
+            is SwipePageActionEvent -> onSwipePageActionEvent(viewActionEvent)
+            is ShareFileViewActionEvent -> onShareFileViewActionEvent(viewActionEvent)
+            is PickFileActionEvent -> launchPickFileIntent(viewActionEvent)
+            else -> onUnhandledViewActionEvent(viewActionEvent)
+        }
+    }
+
+    protected open fun onUnhandledViewActionEvent(viewActionEvent: ViewActionEvent) {
+
     }
 
     override fun recreate() {
