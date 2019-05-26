@@ -2,6 +2,10 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 android {
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         testInstrumentationRunner 'com.lelloman.common.webview.TestRunner'
     }

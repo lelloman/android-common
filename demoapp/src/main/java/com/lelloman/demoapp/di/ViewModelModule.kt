@@ -2,6 +2,8 @@ package com.lelloman.demoapp.di
 
 import androidx.lifecycle.ViewModel
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.common.webview.interceptor.AdBlockInterceptor
+import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
 import com.lelloman.demoapp.ui.main.MainViewModel
 import com.lelloman.demoapp.ui.main.MainViewModelImpl
 import com.lelloman.demoapp.ui.themeswitch.ThemeSwitchViewModel
@@ -35,8 +37,12 @@ class ViewModelModule {
 
     @Provides
     fun provideWebViewViewModel(
-        dependencies: BaseViewModel.Dependencies
+        dependencies: BaseViewModel.Dependencies,
+        pdfInterceptor: PdfInterceptor,
+        adBlockInterceptor: AdBlockInterceptor
     ) = WebViewViewModel(
-        dependencies = dependencies
+        dependencies = dependencies,
+        pdfInterceptor = pdfInterceptor,
+        adBlockInterceptor = adBlockInterceptor
     )
 }

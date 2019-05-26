@@ -32,7 +32,9 @@
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
                 app:listener="@{viewModel}"
-                app:loadUrl="@{viewModel.url}"/>
+                app:url="@{viewModel.url}"
+                app:interceptors="@{viewModel.interceptors}"
+                />
 
     </LinearLayout>
 </layout>

@@ -94,6 +94,14 @@ class CookedWebView : WebView {
         interceptors.remove(interceptor)
     }
 
+    fun addInterceptors(interceptors: List<CookedWebViewInterceptor>) = synchronized(this.interceptors) {
+        this.interceptors.addAll(interceptors)
+    }
+
+    fun removeInterceptors(interceptors: List<CookedWebViewInterceptor>) = synchronized(this.interceptors) {
+        this.interceptors.removeAll(interceptors)
+    }
+
     interface Listener {
         fun onPageLoadingStateChanged(percent: Int)
     }
