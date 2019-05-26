@@ -26,9 +26,6 @@ class WebViewActivity : BaseActivity<WebViewViewModel, ActivityWebViewBinding>()
         with(binding.webView) {
             addInterceptor(adBlockInterceptor)
             addInterceptor(pdfInterceptor)
-            loadUrl("https://www.imslp.org")
-//            loadUrl("https://www.orimi.com/pdf-test.pdf")
-//            loadUrl("https://imslp.org/wiki/Special:IMSLPDisclaimerAccept/548820")
         }
     }
 
