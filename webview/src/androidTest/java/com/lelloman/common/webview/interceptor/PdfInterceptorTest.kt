@@ -10,6 +10,7 @@ import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.http.request.HttpRequestMethod
 import com.lelloman.common.webview.CookedWebView
+import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat

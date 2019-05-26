@@ -6,7 +6,7 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.common.webview.interceptor.AdBlockInterceptor
-import com.lelloman.common.webview.interceptor.PdfInterceptor
+import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
 import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityWebViewBinding
 import javax.inject.Inject

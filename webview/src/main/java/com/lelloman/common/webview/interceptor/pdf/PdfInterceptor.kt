@@ -1,7 +1,6 @@
-package com.lelloman.common.webview.interceptor
+package com.lelloman.common.webview.interceptor.pdf
 
 import android.content.Context
-import android.content.Intent
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.lelloman.common.http.ApplicationContentType
@@ -13,7 +12,10 @@ import com.lelloman.common.http.request.HttpRequestMethod
 import com.lelloman.common.webview.CookedWebView
 import com.lelloman.common.webview.CookedWebViewInterceptor
 
-class PdfInterceptor(private val httpClient: HttpClient) : CookedWebViewInterceptor {
+class PdfInterceptor(
+    private val httpClient: HttpClient,
+    private val pdfUriOpener: PdfUriOpener
+) : CookedWebViewInterceptor {
 
     private var lastLoadedUrl: String? = null
 
@@ -39,8 +41,7 @@ class PdfInterceptor(private val httpClient: HttpClient) : CookedWebViewIntercep
                 .blockingGet()
 
             if (httpResponse.isSuccessful && httpResponse.contentType.isPdf()) {
-                val intent = Intent(Intent.ACTION_VIEW).setDataAndType(webResourceRequest.url, "application/pdf")
-                context.startActivity(intent)
+                pdfUriOpener.openUri(context, webResourceRequest.url)
             }
         }
 
