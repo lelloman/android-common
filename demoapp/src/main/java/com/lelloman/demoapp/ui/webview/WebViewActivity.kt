@@ -5,28 +5,15 @@ import android.content.Intent
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.webview.interceptor.AdBlockInterceptor
-import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
 import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityWebViewBinding
-import javax.inject.Inject
 
 class WebViewActivity : BaseActivity<WebViewViewModel, ActivityWebViewBinding>() {
 
     override val layoutResId = R.layout.activity_web_view
 
-    @Inject
-    lateinit var adBlockInterceptor: AdBlockInterceptor
-
-    @Inject
-    lateinit var pdfInterceptor: PdfInterceptor
-
     override fun setViewModel(binding: ActivityWebViewBinding, viewModel: WebViewViewModel) {
         binding.viewModel = viewModel
-        with(binding.webView) {
-            addInterceptor(adBlockInterceptor)
-            addInterceptor(pdfInterceptor)
-        }
     }
 
     override fun getViewModelClass() = WebViewViewModel::class.java
