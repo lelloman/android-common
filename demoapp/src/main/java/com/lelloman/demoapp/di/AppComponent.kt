@@ -3,7 +3,6 @@ package com.lelloman.demoapp.di
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.http.HttpModule
 import com.lelloman.common.settings.BaseSettingsModule
-import com.lelloman.common.webview.CookedWebViewModule
 import com.lelloman.demoapp.DemoApplication
 import dagger.Component
 import dagger.android.AndroidInjectionModule
