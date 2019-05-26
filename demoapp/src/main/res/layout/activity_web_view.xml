@@ -31,7 +31,8 @@
                 android:layout_weight="1"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
-                app:listener="@{viewModel}"/>
+                app:listener="@{viewModel}"
+                app:loadUrl="@{viewModel.url}"/>
 
     </LinearLayout>
 </layout>
