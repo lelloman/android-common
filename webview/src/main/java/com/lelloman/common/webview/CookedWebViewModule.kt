@@ -1,10 +1,9 @@
-package com.lelloman.demoapp.di
+package com.lelloman.common.webview
 
 import android.content.Context
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.webview.interceptor.AdBlockInterceptor
 import com.lelloman.common.webview.interceptor.PdfInterceptor
-import com.lelloman.demoapp.R
 import dagger.Module
 import dagger.Provides
 

@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">webview</string>
+    <string-array name="blockedDomains">
+        <item>adservice.google.com</item>
+        <item>adservice.google.nl</item>
+        <item>googleads.g.doubleclick.net</item>
+        <item>pagead2.googlesyndication.com</item>
+        <item>pixel.quantserve.com</item>
+        <item>pro.ip-api.com</item>
+        <item>rules.quantcount.com</item>
+        <item>secure.quantserve.com</item>
+        <item>tpc.googlesyndication.com</item>
+        <item>www.googletagservices.com</item>
+    </string-array>
 </resources>
