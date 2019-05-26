@@ -3,7 +3,8 @@ package com.lelloman.common.webview
 import android.content.Context
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.webview.interceptor.AdBlockInterceptor
-import com.lelloman.common.webview.interceptor.PdfInterceptor
+import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
+import com.lelloman.common.webview.interceptor.pdf.PdfUriOpener
 import dagger.Module
 import dagger.Provides
 
@@ -20,8 +21,10 @@ class CookedWebViewModule {
 
     @Provides
     fun providePdfInterceptor(
-        httpClient: HttpClient
+        httpClient: HttpClient,
+        pdfUriOpener: PdfUriOpener
     ) = PdfInterceptor(
-        httpClient = httpClient
+        httpClient = httpClient,
+        pdfUriOpener = pdfUriOpener
     )
 }

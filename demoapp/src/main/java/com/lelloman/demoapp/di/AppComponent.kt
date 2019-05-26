@@ -19,11 +19,11 @@ import javax.inject.Singleton
         BaseSettingsModule::class,
         CookedWebViewModule::class,
         HttpModule::class,
+        PdfModule::class,
         ViewModelFactoryModule::class,
         ViewModelModule::class
     ]
 )
 interface AppComponent {
-
     fun inject(app: DemoApplication)
 }
