@@ -26,6 +26,8 @@ abstract class HeadersRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseList
 
     abstract val listItemLayoutResId: Int
 
+    protected val headerLayoutResId = R.layout.list_item_header
+
     protected abstract fun bindViewModel(binding: DB, viewModel: VM)
 
     protected abstract fun createViewModel(): VM
@@ -78,7 +80,7 @@ abstract class HeadersRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseList
 
     private fun makeHeaderViewHolder(parent: ViewGroup) = LayoutInflater
         .from(parent.context)
-        .inflate(R.layout.list_item_header, parent, false)
+        .inflate(headerLayoutResId, parent, false)
         .let(::HeaderViewHolder)
 
     private fun makeItemViewHolder(parent: ViewGroup): ItemViewHolder {
