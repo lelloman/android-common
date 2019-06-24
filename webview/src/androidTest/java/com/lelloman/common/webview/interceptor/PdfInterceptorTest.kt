@@ -11,6 +11,7 @@ import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.http.request.HttpRequestMethod
 import com.lelloman.common.webview.CookedWebView
 import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
+import com.lelloman.common.webview.interceptor.pdf.PdfUriOpener
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat
@@ -23,13 +24,17 @@ class PdfInterceptorTest {
     private val httpClient: HttpClient = mock {
         on { request(any()) }.thenReturn(Single.error(Exception()))
     }
+    private val pdfUriOpener: PdfUriOpener = mock()
 
-    private val tested = PdfInterceptor(httpClient)
-
+    private val tested = PdfInterceptor(
+        httpClient = httpClient,
+        pdfUriOpener = pdfUriOpener
+    )
 
     @Test
     fun doesNotMakeHeadRequestIfNoUrlHasBeenLoadedBefore() {
-        val request: WebResourceRequest = mock { on { url }.thenReturn(Uri.parse("http://www.asd.com")) }
+        val request: WebResourceRequest =
+            mock { on { url }.thenReturn(Uri.parse("http://www.asd.com")) }
 
         val intercepted = tested.interceptRequest(context, webView, request)
 
@@ -91,12 +96,13 @@ class PdfInterceptorTest {
         val intercepted = tested.interceptRequest(context, webView, request)
 
         assertThat(intercepted).isNull()
-        verify(context).startActivity(argThat {
-            action == Intent.ACTION_VIEW && type == "application/pdf" && data == Uri.parse(requestUrl)
-        })
+        verify(pdfUriOpener).openPdfUri(Uri.parse(requestUrl))
     }
 
-    private fun makeWebRequest(requestUrl: String, requestMethod: String = "GET"): WebResourceRequest = mock {
+    private fun makeWebRequest(
+        requestUrl: String,
+        requestMethod: String = "GET"
+    ): WebResourceRequest = mock {
         on { url }.thenReturn(Uri.parse(requestUrl))
         on { method }.thenReturn(requestMethod)
     }
