@@ -1,0 +1,9 @@
+<lint>
+    <issue id="InvalidPackage">
+        <ignore path="**/byte-buddy-agent*.jar"/>
+        <ignore path="**/mockito-core*.jar"/>
+    </issue>
+    <issue id="GradleCompatible">
+        <ignore path="**" />
+    </issue>
+</lint>
