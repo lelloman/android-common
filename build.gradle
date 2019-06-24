@@ -72,7 +72,7 @@ dependencyUpdates.resolutionStrategy {
 subprojects { Project project ->
 
     boolean isApplication = project.getProperties()["isApplication"]
-    if(isApplication) {
+    if (isApplication) {
         apply plugin: 'com.android.application'
     } else {
         apply plugin: 'com.android.library'
@@ -97,5 +97,9 @@ subprojects { Project project ->
             targetCompatibility 1.8
         }
 
+        lintOptions {
+            lintConfig file(rootDir.absolutePath
+                    + "/lint.xml")
+        }
     }
 }
