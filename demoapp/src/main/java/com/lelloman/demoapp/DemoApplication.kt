@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.view.AppTheme
 import com.lelloman.demoapp.di.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -24,7 +25,7 @@ open class DemoApplication : Application(), HasActivityInjector {
     protected open fun inject() {
         DaggerAppComponent
             .builder()
-            .baseApplicationModule(BaseApplicationModule(this))
+            .baseApplicationModule(BaseApplicationModule(this, AppTheme.DARCULA))
             .build()
             .inject(this)
     }

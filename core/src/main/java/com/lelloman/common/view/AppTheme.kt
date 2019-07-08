@@ -15,11 +15,9 @@ enum class AppTheme(
 
     companion object {
 
-        var DEFAULT = LIGHT
+        val DEFAULT = LIGHT
 
-        private val namesMap = AppTheme
-            .values()
-            .associateBy(AppTheme::name)
+        private val namesMap = values().associateBy(AppTheme::name)
 
         fun fromName(name: String): AppTheme =
             if (namesMap.containsKey(name)) {

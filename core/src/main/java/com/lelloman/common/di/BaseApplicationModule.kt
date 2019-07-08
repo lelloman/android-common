@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
-import com.lelloman.common.di.qualifiers.ApplicationPackageName
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.NewThreadScheduler
-import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.di.qualifiers.*
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.navigation.NavigationRouter
@@ -23,7 +20,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-open class BaseApplicationModule(private val application: Application) {
+open class BaseApplicationModule(
+    private val application: Application,
+    private val defaultAppTheme: AppTheme = AppTheme.DEFAULT
+) {
 
     @Provides
     fun provideContext(): Context = application
@@ -146,4 +146,8 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
+
+    @Provides
+    @DefaultAppTheme
+    fun provideDefaultAppTheme() = defaultAppTheme
 }
