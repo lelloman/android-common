@@ -6,6 +6,7 @@ import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockTimeProvider
 import com.nhaarman.mockitokotlin2.*
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.junit.Test
 
 class HttpClientImplTest {
@@ -14,7 +15,7 @@ class HttpClientImplTest {
         on { toMultimap() }.thenAnswer { emptyMap<String, List<String>>() }
     }
     private val okHttpResponse: Response = mock {
-        on { headers() }.thenAnswer { okResponseHeaders }
+        on { headers }.thenAnswer { okResponseHeaders }
     }
     private val okHttpCall: Call = mock {
         on { execute() }.thenAnswer { okHttpResponse }
@@ -38,14 +39,14 @@ class HttpClientImplTest {
 
         tester.assertNoErrors()
         verify(okHttpClient).newCall(argThat {
-            this.method() == "GET" && this.url() == HttpUrl.parse(HTTP_REQUEST.url)
+            this.method == "GET" && this.url == HTTP_REQUEST.url.toHttpUrlOrNull()
         })
     }
 
     @Test
     fun `returns http status code in response`() {
         val responseCode = 0xb00b5
-        whenever(okHttpResponse.code()).thenReturn(responseCode)
+        whenever(okHttpResponse.code).thenReturn(responseCode)
 
         val tester = tested.request(HTTP_REQUEST).test()
 
@@ -75,7 +76,7 @@ class HttpClientImplTest {
 
     @Test
     fun `returns empty string body if ok http response body is null`() {
-        whenever(okHttpResponse.body()).thenReturn(null)
+        whenever(okHttpResponse.body).thenReturn(null)
 
         val tester = tested.request(HTTP_REQUEST).test()
 
@@ -86,7 +87,7 @@ class HttpClientImplTest {
     @Test
     fun `returns empty string body if string from ok http response body is null`() {
         val responseBody = ResponseBody.create(null, ByteArray(0))
-        whenever(okHttpResponse.body()).thenReturn(responseBody)
+        whenever(okHttpResponse.body).thenReturn(responseBody)
 
         val tester = tested.request(HTTP_REQUEST).test()
 
@@ -98,7 +99,7 @@ class HttpClientImplTest {
     fun `returns string body from ok http response`() {
         val body = "bo bo body"
         val responseBody = ResponseBody.create(null, body.toByteArray())
-        whenever(okHttpResponse.body()).thenReturn(responseBody)
+        whenever(okHttpResponse.body).thenReturn(responseBody)
 
         val tester = tested.request(HTTP_REQUEST).test()
 
@@ -129,7 +130,7 @@ class HttpClientImplTest {
     @Test
     fun `returns application content type`() {
         val subType = "json"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("application/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -141,7 +142,7 @@ class HttpClientImplTest {
     @Test
     fun `returns audio content type`() {
         val subType = "mp3"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("audio/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -153,7 +154,7 @@ class HttpClientImplTest {
     @Test
     fun `returns image content type`() {
         val subType = "x-icon"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("image/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -165,7 +166,7 @@ class HttpClientImplTest {
     @Test
     fun `returns message content type`() {
         val subType = "what"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("message/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -177,7 +178,7 @@ class HttpClientImplTest {
     @Test
     fun `returns model content type`() {
         val subType = "what"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("model/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -189,7 +190,7 @@ class HttpClientImplTest {
     @Test
     fun `returns multipart content type`() {
         val subType = "what"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("multipart/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -201,7 +202,7 @@ class HttpClientImplTest {
     @Test
     fun `returns text content type`() {
         val subType = "what"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("text/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -213,7 +214,7 @@ class HttpClientImplTest {
     @Test
     fun `returns video content type`() {
         val subType = "what"
-        whenever(okHttpResponse.body()).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
+        whenever(okHttpResponse.body).thenReturn(ResponseBody.create(null, byteArrayOf(1, 2, 3)))
         whenever(okHttpResponse.header("content-type", null)).thenReturn("video/$subType")
 
         val tester = tested.request(HTTP_REQUEST).test()
