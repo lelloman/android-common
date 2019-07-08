@@ -40,20 +40,20 @@ class HttpClientImpl(
 
             logger.d("Thread ${Thread.currentThread().name}")
             val bodyString = request.body?.content?.let { String(it) }
-            logger.d("--> ${okRequest.method()} ${okRequest.url()}\n${okRequest.headers()}\nbody: $bodyString")
+            logger.d("--> ${okRequest.method} ${okRequest.url}\n${okRequest.headers}\nbody: $bodyString")
 
             val t1 = timeProvider.nowUtcMs()
             val okResponse = okHttpClient.newCall(okRequest).execute()
             val t2 = timeProvider.nowUtcMs()
-            val body = okResponse.body()?.bytes() ?: ByteArray(0)
-            logger.d("<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms\n${okResponse.headers()}")
+            val body = okResponse.body?.bytes() ?: ByteArray(0)
+            logger.d("<-- ${okRequest.method} ${okResponse.code} ${okRequest.url} in ${t2 - t1}ms\n${okResponse.headers}")
             logger.d("response length: ${body.size}")
 
             val contentTypeHeader = okResponse.header("content-type", null)
             val contentType = ContentType.fromHeader(contentTypeHeader)
-            val headers = okResponse.headers().toMultimap()
+            val headers = okResponse.headers.toMultimap()
             HttpResponse(
-                code = okResponse.code(),
+                code = okResponse.code,
                 isSuccessful = okResponse.isSuccessful,
                 body = body,
                 contentType = contentType,
