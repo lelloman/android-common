@@ -27,12 +27,12 @@ interface BaseApplicationSettings {
         const val DEFAULT_USE_METERED_NETWORK = false
 
         const val KEY_APP_THEME = "AppTheme"
-        val DEFAULT_APP_THEME = AppTheme.DEFAULT
     }
 }
 
 internal class BaseApplicationSettingsImpl(
-    context: Context
+    context: Context,
+    defaultAppTheme: AppTheme
 ) : BaseApplicationSettings {
 
     private val prefs = context.getSharedPreferences(BaseApplicationSettings.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
@@ -46,7 +46,7 @@ internal class BaseApplicationSettingsImpl(
     private val appThemeProperty = prefs
         .enumProperty(
             BaseApplicationSettings.KEY_APP_THEME,
-            BaseApplicationSettings.DEFAULT_APP_THEME,
+            defaultAppTheme,
             AppTheme.Companion::fromName
         )
 
