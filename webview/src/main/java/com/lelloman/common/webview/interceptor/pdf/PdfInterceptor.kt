@@ -41,7 +41,7 @@ class PdfInterceptor(
                 .blockingGet()
 
             if (httpResponse.isSuccessful && httpResponse.contentType.isPdf()) {
-                pdfUriOpener.openPdfUri(webResourceRequest.url)
+                pdfUriOpener.openPdfUri(webResourceRequest.url.toString())
             }
         }
 
