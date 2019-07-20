@@ -6,7 +6,7 @@ import android.net.Uri
 
 class DefaultPdfUriOpener(private val context: Context) : PdfUriOpener {
 
-    override fun openPdfUri(uri: Uri) = Intent(Intent.ACTION_VIEW)
-        .setDataAndType(uri, "application/pdf")
+    override fun openPdfUri(uri: String) = Intent(Intent.ACTION_VIEW)
+        .setDataAndType(Uri.parse(uri), "application/pdf")
         .let(context::startActivity)
 }

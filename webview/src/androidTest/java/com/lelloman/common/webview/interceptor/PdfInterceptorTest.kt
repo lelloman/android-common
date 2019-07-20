@@ -1,7 +1,6 @@
 package com.lelloman.common.webview.interceptor
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import com.lelloman.common.http.ApplicationContentType
@@ -96,7 +95,7 @@ class PdfInterceptorTest {
         val intercepted = tested.interceptRequest(context, webView, request)
 
         assertThat(intercepted).isNull()
-        verify(pdfUriOpener).openPdfUri(Uri.parse(requestUrl))
+        verify(pdfUriOpener).openPdfUri(requestUrl)
     }
 
     private fun makeWebRequest(
