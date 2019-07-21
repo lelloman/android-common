@@ -1,9 +1,11 @@
 package com.lelloman.common.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.FileProvider
@@ -139,12 +141,21 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             is SwipePageActionEvent -> onSwipePageActionEvent(viewActionEvent)
             is ShareFileViewActionEvent -> onShareFileViewActionEvent(viewActionEvent)
             is PickFileActionEvent -> launchPickFileIntent(viewActionEvent)
+            is CloseKeyboard -> closeKeyboard()
             else -> onUnhandledViewActionEvent(viewActionEvent)
         }
     }
 
     protected open fun onUnhandledViewActionEvent(viewActionEvent: ViewActionEvent) {
 
+    }
+
+    protected fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     override fun recreate() {
