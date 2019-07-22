@@ -24,6 +24,9 @@ class CookedWebView : WebView {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             listener?.onPageLoadingStateChanged(100)
+            if (url != null) {
+                listener?.onPageUrlChanged(url)
+            }
         }
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest): Boolean {

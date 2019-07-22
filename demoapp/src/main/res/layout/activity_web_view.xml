@@ -16,6 +16,13 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true">
 
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.currentUrl}"
+                android:layout_weight="0"
+                />
+
         <ProgressBar
                 android:id="@+id/progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -32,7 +39,7 @@
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
                 app:listener="@{viewModel}"
-                app:url="@{viewModel.url}"
+                app:url="@{viewModel.address}"
                 app:interceptors="@{viewModel.interceptors}"
                 />
 
