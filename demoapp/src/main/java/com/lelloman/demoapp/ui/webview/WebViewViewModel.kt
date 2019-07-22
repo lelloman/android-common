@@ -16,20 +16,23 @@ class WebViewViewModel(
     private val mutableProgressVisible = MutableLiveData<Boolean>()
     val progressVisible: LiveData<Boolean> = mutableProgressVisible
 
+    private val mutableCurrentUrl = MutableLiveData<String>()
+    val currentUrl: LiveData<String> = mutableCurrentUrl
+
     val interceptors = listOf(pdfInterceptor, adBlockInterceptor)
 
-    private val mutableUrl = MutableLiveData<String>().apply {
-        value = "https://www.imslp.org"
+    private val mutableAddress = MutableLiveData<String>().apply {
+        value = "https://www.imslp.org".apply { mutableCurrentUrl.postValue(this) }
 //        value = "https://www.orimi.com/pdf-test.pdf"
 //        value = "https://imslp.org/wiki/Special:IMSLPDisclaimerAccept/548820"
     }
-    val url: LiveData<String> = mutableUrl
+    val address: LiveData<String> = mutableAddress
 
     override fun onPageLoadingStateChanged(percent: Int) {
         mutableProgressVisible.postValue(percent != 100)
     }
 
     override fun onPageUrlChanged(newUrl: String) {
-
+        mutableCurrentUrl.postValue(newUrl)
     }
 }
