@@ -33,6 +33,7 @@ class CookedWebView : WebView {
                         return true
                     }
                 }
+                listener?.onPageUrlChanged(request.url.toString())
                 return false
             }
         }
@@ -104,5 +105,6 @@ class CookedWebView : WebView {
 
     interface Listener {
         fun onPageLoadingStateChanged(percent: Int)
+        fun onPageUrlChanged(newUrl: String)
     }
 }

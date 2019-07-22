@@ -28,4 +28,8 @@ class WebViewViewModel(
     override fun onPageLoadingStateChanged(percent: Int) {
         mutableProgressVisible.postValue(percent != 100)
     }
+
+    override fun onPageUrlChanged(newUrl: String) {
+
+    }
 }
