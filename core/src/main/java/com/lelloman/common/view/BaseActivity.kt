@@ -142,12 +142,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             is ShareFileViewActionEvent -> onShareFileViewActionEvent(viewActionEvent)
             is PickFileActionEvent -> launchPickFileIntent(viewActionEvent)
             is CloseKeyboard -> closeKeyboard()
+            is GoFullScreen -> goFullScreen()
             else -> onUnhandledViewActionEvent(viewActionEvent)
         }
     }
 
     protected open fun onUnhandledViewActionEvent(viewActionEvent: ViewActionEvent) {
 
+    }
+
+    protected fun goFullScreen() {
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
 
     protected fun closeKeyboard() {
