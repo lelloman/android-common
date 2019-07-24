@@ -18,9 +18,8 @@ fun DeepLink.putParcelable(key: String, parcelable: Parcelable) = apply {
     putString(key, Base64Util.encode(bytes))
 }
 
-fun <T : Parcelable> DeepLink.getParcelable(key: String, clazz: Class<T>): T {
-    val base64String =
-        getString(key) ?: throw IllegalArgumentException("DeepLink instance has no value with key \"$key\"")
+fun <T : Parcelable> DeepLink.getParcelable(key: String, clazz: Class<T>): T? {
+    val base64String = getString(key) ?: return null
     val bytes = Base64Util.decode(base64String)
     val parcel = Parcel.obtain()
     parcel.unmarshall(bytes, 0, bytes.size)
