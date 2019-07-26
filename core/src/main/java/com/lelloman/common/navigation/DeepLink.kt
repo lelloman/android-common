@@ -27,23 +27,25 @@ class DeepLink(val screen: NavigationScreen) {
         parameters[key] = value
     }
 
-    fun getString(key: String) = if (parameters.containsKey(key)) {
-        parameters[key] as String
-    } else {
-        null
-    }
+    fun getString(key: String) = parameters[key] as String?
 
     fun putInt(key: String, value: Int) = apply {
         parameters[key] = value
     }
 
+    fun getInt(key: String) = parameters[key] as Int?
+
     fun putBoolean(key: String, value: Boolean) = apply {
         parameters[key] = value
     }
 
+    fun getBoolean(key: String) = parameters[key] as Boolean?
+
     fun putDouble(key: String, value: Double) = apply {
         parameters[key] = value
     }
+
+    fun getDouble(key: String) = parameters[key] as Double?
 
     fun putSerializableArrayList(key: String, arrayList: ArrayList<out Serializable>) = apply {
         val bos = ByteArrayOutputStream()
