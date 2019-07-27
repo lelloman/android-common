@@ -18,6 +18,8 @@ interface FileProvider {
     fun deleteAllCacheFiles(): Completable
 
     fun deleteAllInternalFiles(): Completable
+
+    fun copyFile(src: File, dst: File): Completable
 }
 
 internal class FileProviderImpl(
@@ -40,5 +42,9 @@ internal class FileProviderImpl(
 
     override fun deleteAllInternalFiles() = Completable.fromAction {
         context.filesDir.listFiles()?.forEach { it.deleteRecursively() }
+    }
+
+    override fun copyFile(src: File, dst: File) = Completable.fromAction {
+        src.copyTo(dst)
     }
 }
