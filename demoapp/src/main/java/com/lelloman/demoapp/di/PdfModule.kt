@@ -1,14 +1,15 @@
 package com.lelloman.demoapp.di
 
-import android.content.Context
+import com.lelloman.common.di.KoinModuleFactory
 import com.lelloman.common.webview.interceptor.pdf.DefaultPdfUriOpener
 import com.lelloman.common.webview.interceptor.pdf.PdfUriOpener
-import dagger.Module
-import dagger.Provides
+import org.koin.dsl.module
 
-@Module
-class PdfModule {
+class PdfModule : KoinModuleFactory {
 
-    @Provides
-    fun provideDefaultPdfUriOpener(context: Context): PdfUriOpener = DefaultPdfUriOpener(context)
+    override fun makeKoinModule() = module {
+        factory<PdfUriOpener> {
+            DefaultPdfUriOpener(context = get())
+        }
+    }
 }

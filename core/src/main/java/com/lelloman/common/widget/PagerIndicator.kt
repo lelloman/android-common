@@ -6,9 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.support.annotation.VisibleForTesting
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.viewpager.widget.ViewPager
 import com.lelloman.common.R
 
@@ -72,10 +72,18 @@ class PagerIndicator @JvmOverloads constructor(
             )
 
             try {
-                fillColor = a.getColor(R.styleable.PagerIndicator_indicatorFillColor, DEFAULT_FILL_COLOR)
-                emptyColor = a.getColor(R.styleable.PagerIndicator_indicatorEmptyColor, DEFAULT_FILL_COLOR)
-                circleRadius = a.getDimensionPixelSize(R.styleable.PagerIndicator_indicatorRadius, defaultCircleRadius)
-                circleMargin = a.getDimensionPixelSize(R.styleable.PagerIndicator_indicatorMargin, defaultCircleMargin)
+                fillColor =
+                    a.getColor(R.styleable.PagerIndicator_indicatorFillColor, DEFAULT_FILL_COLOR)
+                emptyColor =
+                    a.getColor(R.styleable.PagerIndicator_indicatorEmptyColor, DEFAULT_FILL_COLOR)
+                circleRadius = a.getDimensionPixelSize(
+                    R.styleable.PagerIndicator_indicatorRadius,
+                    defaultCircleRadius
+                )
+                circleMargin = a.getDimensionPixelSize(
+                    R.styleable.PagerIndicator_indicatorMargin,
+                    defaultCircleMargin
+                )
             } finally {
                 a.recycle()
             }
@@ -149,17 +157,18 @@ class PagerIndicator @JvmOverloads constructor(
             filledCircleDstRect.top = bitmapY
             filledCircleDstRect.bottom = bitmapY + circleRadiusAndMarginTimes2
 
-            emptyCirclesBitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888)?.apply {
-                Canvas(this).apply {
-                    var x = circleRadiusAndMargin.toFloat()
-                    val y = bitmapHeight / 2f
-                    val radius = circleRadius.toFloat()
-                    for (i in 0 until nIndicators) {
-                        drawCircle(x, y, radius, emptyPaint)
-                        x += circleRadiusAndMarginTimes2
+            emptyCirclesBitmap =
+                Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888)?.apply {
+                    Canvas(this).apply {
+                        var x = circleRadiusAndMargin.toFloat()
+                        val y = bitmapHeight / 2f
+                        val radius = circleRadius.toFloat()
+                        for (i in 0 until nIndicators) {
+                            drawCircle(x, y, radius, emptyPaint)
+                            x += circleRadiusAndMarginTimes2
+                        }
                     }
                 }
-            }
 
             filledCircleBitmap = Bitmap
                 .createBitmap(
@@ -204,7 +213,8 @@ class PagerIndicator @JvmOverloads constructor(
             val filledCircleInverseWidth = Math.round(offset * circleRadiusAndMarginTimes2)
             var filledCircleLeft =
                 circlesRect!!.left + circleRadiusAndMarginTimes2 * position + filledCircleInverseWidth
-            var filledCircleRight = circlesRect!!.left + circleRadiusAndMarginTimes2 * (position + 1)
+            var filledCircleRight =
+                circlesRect!!.left + circleRadiusAndMarginTimes2 * (position + 1)
 
             filledCircleSrcRect.left = filledCircleInverseWidth
             filledCircleSrcRect.right = circleRadiusAndMarginTimes2
@@ -217,14 +227,20 @@ class PagerIndicator @JvmOverloads constructor(
                 position = selectedIndicator + 1
                 val filledCircleWidth = Math.round(offset * circleRadiusAndMarginTimes2)
                 filledCircleLeft = circlesRect!!.left + circleRadiusAndMarginTimes2 * position
-                filledCircleRight = circlesRect!!.left + circleRadiusAndMarginTimes2 * position + filledCircleWidth
+                filledCircleRight =
+                    circlesRect!!.left + circleRadiusAndMarginTimes2 * position + filledCircleWidth
 
                 filledCircleSrcRect.left = 0
                 filledCircleSrcRect.right = filledCircleWidth
                 filledCircleDstRect.left = filledCircleLeft
                 filledCircleDstRect.right = filledCircleRight
 
-                canvas.drawBitmap(filledCircleBitmap!!, filledCircleSrcRect, filledCircleDstRect, null)
+                canvas.drawBitmap(
+                    filledCircleBitmap!!,
+                    filledCircleSrcRect,
+                    filledCircleDstRect,
+                    null
+                )
             }
         }
     }

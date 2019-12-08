@@ -4,8 +4,8 @@ package com.lelloman.common.viewmodel
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.annotation.StringRes
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.logger.LoggerFactory

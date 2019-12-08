@@ -1,10 +1,11 @@
 package com.lelloman.demoapp.ui.main
 
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.demoapp.navigation.DemoAppScreens
 
-abstract class MainViewModel(dependencies: BaseViewModel.Dependencies) : BaseViewModel(dependencies) {
+class MainViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
-    abstract fun onThemeSwitchClicked()
+    fun onThemeSwitchClicked() = navigate(DemoAppScreens.THEMES_SWITCH)
 
-    abstract fun onWebViewClicked()
+    fun onWebViewClicked() = navigate(DemoAppScreens.WEB_VIEW)
 }

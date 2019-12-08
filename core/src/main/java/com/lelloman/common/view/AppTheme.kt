@@ -1,6 +1,6 @@
 package com.lelloman.common.view
 
-import android.support.annotation.StyleRes
+import androidx.annotation.StyleRes
 import com.lelloman.common.R
 import com.lelloman.common.utils.model.Named
 

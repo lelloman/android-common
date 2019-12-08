@@ -1,32 +1,20 @@
 package com.lelloman.demoapp
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
-import com.lelloman.common.di.BaseApplicationModule
-import com.lelloman.common.view.AppTheme
-import com.lelloman.demoapp.di.DaggerAppComponent
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import com.lelloman.common.BaseApplication
+import com.lelloman.common.di.KoinModuleFactory
+import com.lelloman.common.http.HttpModule
+import com.lelloman.demoapp.di.CookedWebViewModule
+import com.lelloman.demoapp.di.PdfModule
+import com.lelloman.demoapp.di.ViewModelModule
 
-open class DemoApplication : Application(), HasActivityInjector {
+open class DemoApplication : BaseApplication() {
 
-    @Inject
-    lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
-
-    override fun activityInjector() = dispatchingActivityAndroidInjector
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        inject()
-    }
-
-    protected open fun inject() {
-        DaggerAppComponent
-            .builder()
-            .baseApplicationModule(BaseApplicationModule(this, AppTheme.DARCULA))
-            .build()
-            .inject(this)
+    override fun getKoinModuleFactories(): MutableList<KoinModuleFactory> {
+        return super.getKoinModuleFactories().apply {
+            add(PdfModule())
+            add(ViewModelModule())
+            add(HttpModule())
+            add(CookedWebViewModule())
+        }
     }
 }

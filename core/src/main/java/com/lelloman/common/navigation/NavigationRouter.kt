@@ -5,7 +5,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 
 
 class NavigationRouter(

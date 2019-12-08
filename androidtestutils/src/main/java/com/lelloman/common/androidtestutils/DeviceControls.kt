@@ -2,11 +2,14 @@
 
 package com.lelloman.common.androidtestutils
 
-import android.support.test.uiautomator.UiDevice
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
 
-fun rotateNatural() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationNatural()
+fun rotateNatural() =
+    UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationNatural()
 
-fun rotateLeft() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationLeft()
+fun rotateLeft() =
+    UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationLeft()
 
-fun rotateRight() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationRight()
+fun rotateRight() =
+    UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).setOrientationRight()
