@@ -11,6 +11,7 @@ import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityThemeSwitchBinding
 import com.lelloman.demoapp.databinding.ListItemThemeBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
 private typealias ThemeListItem = ThemeSwitchViewModel.ThemeListItem
 
@@ -18,15 +19,18 @@ class ThemeSwitchActivity : BaseActivity<ThemeSwitchViewModel, ActivityThemeSwit
 
     override val layoutResId = R.layout.activity_theme_switch
 
-    override fun setViewModel(binding: ActivityThemeSwitchBinding, viewModel: ThemeSwitchViewModel) {
+    override val viewModel by viewModel<ThemeSwitchViewModel>()
+
+    override fun setViewModel(
+        binding: ActivityThemeSwitchBinding,
+        viewModel: ThemeSwitchViewModel
+    ) {
         binding.viewModel = viewModel
         binding.themesRecyclerView.layoutManager = GridLayoutManager(this, 2)
         val adapter = ThemesAdapter { viewModel.onThemeClicked(it.theme) }
         binding.themesRecyclerView.adapter = adapter
         viewModel.themes.observe(this, adapter)
     }
-
-    override fun getViewModelClass() = ThemeSwitchViewModel::class.java
 
     companion object {
         var deepLinkStartable = object : DeepLinkStartable {
@@ -48,7 +52,10 @@ class ThemeSwitchActivity : BaseActivity<ThemeSwitchViewModel, ActivityThemeSwit
     ) {
         override val listItemLayoutResId = R.layout.list_item_theme
 
-        override fun bindViewModel(binding: ListItemThemeBinding, viewModel: ThemeListItemViewModel) {
+        override fun bindViewModel(
+            binding: ListItemThemeBinding,
+            viewModel: ThemeListItemViewModel
+        ) {
             binding.viewModel = viewModel
         }
 

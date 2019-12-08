@@ -7,26 +7,32 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
+import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.navigation.CloseScreenViewActionEvent
 import com.lelloman.common.navigation.NavigationEvent
+import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.actionevent.*
 import com.lelloman.common.viewmodel.BaseViewModel
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
-    : InjectableActivity() {
+    : AppCompatActivity() {
 
-    protected lateinit var viewModel: VM
+    protected abstract val viewModel: VM
     @Suppress("MemberVisibilityCanBePrivate")
     protected lateinit var binding: DB
 
@@ -45,6 +51,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private val themeChangedEventsSubscriptions = CompositeDisposable()
 
     protected abstract val layoutResId: Int
+
+    private val loggerFactory: LoggerFactory by inject()
+    private val ioScheduler: Scheduler by inject(IoScheduler)
+    private val uiScheduler: Scheduler by inject(UiScheduler)
+
+    private val navigationRouter: NavigationRouter by inject()
 
     private val logger by lazy { loggerFactory.getLogger(javaClass) }
 
@@ -65,7 +77,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         super.onCreate(savedInstanceState)
         logger.i("onCreate()")
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
         viewModel.onSetupTheme {
             theme.applyStyle(it.resId, true)
         }
@@ -284,8 +295,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
         snack.show()
     }
-
-    protected abstract fun getViewModelClass(): Class<VM>
 
     companion object {
         const val NO_LAYOUT_RES_ID = 0

@@ -1,6 +1,5 @@
 package com.lelloman.common.http
 
-import javax.inject.Qualifier
+import org.koin.core.qualifier.Qualifier
 
-@Qualifier
-annotation class HttpPoolScheduler
+object HttpPoolScheduler : Qualifier

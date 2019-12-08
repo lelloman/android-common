@@ -1,39 +1,53 @@
 package com.lelloman.common.http
 
+import com.lelloman.common.di.KoinModuleFactory
 import com.lelloman.common.http.internal.HttpClientImpl
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
-import dagger.Module
-import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import okhttp3.CookieJar
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
+import org.koin.dsl.module
 import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.Executors
-import javax.inject.Singleton
 
-@Module
-open class HttpModule {
+open class HttpModule : KoinModuleFactory {
+    override fun makeKoinModule() = module {
 
-    @Provides
-    @Singleton
-    fun provideCookieJar(): CookieJar = CookieManager()
+        single {
+            provideCookieJar()
+        }
+
+        single {
+            provideOkHttpClient(cookieJar = get())
+        }
+
+        single {
+            provideHttpClient(
+                okHttpClient = get(),
+                loggerFactory = get(),
+                timeProvider = get()
+            )
+        }
+
+        single(HttpPoolScheduler) {
+            provideHttpPoolScheduler()
+        }
+    }
+
+    open fun provideCookieJar(): CookieJar = CookieManager()
         .apply { setCookiePolicy(CookiePolicy.ACCEPT_ALL) }
         .let(::JavaNetCookieJar)
 
-    @Singleton
-    @Provides
     open fun provideOkHttpClient(cookieJar: CookieJar): OkHttpClient =
         OkHttpClient
             .Builder()
             .cookieJar(cookieJar)
             .build()
 
-    @Singleton
-    @Provides
     open fun provideHttpClient(
         okHttpClient: OkHttpClient,
         loggerFactory: LoggerFactory,
@@ -44,9 +58,6 @@ open class HttpModule {
         timeProvider = timeProvider
     )
 
-    @Singleton
-    @Provides
-    @HttpPoolScheduler
     open fun provideHttpPoolScheduler(): Scheduler = Executors
         .newFixedThreadPool(5)
         .let(Schedulers::from)

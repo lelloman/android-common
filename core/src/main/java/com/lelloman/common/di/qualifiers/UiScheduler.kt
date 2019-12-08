@@ -1,6 +1,5 @@
 package com.lelloman.common.di.qualifiers
 
-import javax.inject.Qualifier
+import org.koin.core.qualifier.Qualifier
 
-@Qualifier
-annotation class UiScheduler
+object UiScheduler : Qualifier

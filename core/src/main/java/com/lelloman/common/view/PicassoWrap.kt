@@ -1,7 +1,7 @@
 package com.lelloman.common.view
 
-import android.support.annotation.DrawableRes
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.lelloman.common.BuildConfig
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -40,7 +40,8 @@ class PicassoWrapImpl(
         view: ImageView,
         @DrawableRes placeHolderId: Int?
     ) {
-        val canUseNetwork = useMeteredNetwork.blockingFirst() || !meteredConnectionChecker.isNetworkMetered()
+        val canUseNetwork =
+            useMeteredNetwork.blockingFirst() || !meteredConnectionChecker.isNetworkMetered()
 
         var requestCreator = requestCreatorProvider.invoke(uri)
 
