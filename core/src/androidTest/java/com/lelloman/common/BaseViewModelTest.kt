@@ -1,14 +1,14 @@
 package com.lelloman.common
 
+import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.common.androidtestutils.whenever
+import com.lelloman.common.viewmodel.command.AnimationCommand
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test
@@ -35,10 +35,10 @@ class BaseViewModelTest {
     private val tested = BaseViewModelImpl(dependencies)
 
     @Test
-    fun emitsManyViewActionEvents() {
+    fun emitsManyCommands() {
         val nEvents = 10000
 
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         for (i in 0 until nEvents) {
             tested.callNavigate(object : NavigationEvent {})
@@ -69,18 +69,19 @@ class BaseViewModelTest {
     }
 
     @Test
-    fun emitsAnimationViewActionEvents() {
+    fun emitsAnimationCommands() {
         val nEvents = 1000
 
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         for (i in 0 until nEvents) {
-            tested.callAnimate(object : AnimationViewActionEvent {})
+            tested.callAnimate(object :
+                AnimationCommand {})
         }
 
         tester.assertValueCount(nEvents)
         for (i in 0 until nEvents) {
-            tester.assertValueAt(i) { it is AnimationViewActionEvent }
+            tester.assertValueAt(i) { it is AnimationCommand }
         }
     }
 
@@ -92,6 +93,6 @@ class BaseViewModelTest {
 
     private class BaseViewModelImpl(dependencies: BaseViewModel.Dependencies) : BaseViewModel(dependencies) {
         fun callNavigate(navigationEvent: NavigationEvent) = super.navigate(navigationEvent)
-        fun callAnimate(event: AnimationViewActionEvent) = super.animate(event)
+        fun callAnimate(event: AnimationCommand) = super.animate(event)
     }
 }

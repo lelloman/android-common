@@ -1,13 +1,13 @@
-package com.lelloman.common.view.actionevent
+package com.lelloman.common.viewmodel.command
 
 import com.google.android.material.snackbar.Snackbar
 
-data class SnackEvent(
+data class ShowSnackCommand(
     val message: String,
     val actionLabel: String? = null,
     val actionToken: String? = null,
     val duration: Int = Snackbar.LENGTH_LONG
-) : ViewActionEvent {
+) : Command {
 
     val hasAction = actionLabel != null && actionToken != null
 }
