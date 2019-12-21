@@ -1,5 +1,5 @@
-package com.lelloman.common.navigation
+package com.lelloman.common.viewmodel.command
 
 data class ViewIntentNavigationEvent(
     val url: String
-) : NavigationEvent
+) : Command

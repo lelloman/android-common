@@ -6,7 +6,6 @@ import android.content.res.AssetManager
 import com.lelloman.common.di.qualifiers.*
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
-import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.*
 import com.lelloman.common.view.*
@@ -45,12 +44,6 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
         }
         single {
             providePackageManager(context = get())
-        }
-        single {
-            provideNavigationRouter(
-                packageManager = get(),
-                applicationPackageName = get(ApplicationPackageName)
-            )
         }
         single {
             provideMeteredConnectionChecker(context = get())
@@ -125,14 +118,6 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
         ResourceProviderImpl(context)
 
     open fun providePackageManager(context: Context): PackageManager = context.packageManager
-
-    open fun provideNavigationRouter(
-        packageManager: PackageManager,
-        applicationPackageName: String
-    ) = NavigationRouter(
-        packageManager = packageManager,
-        applicationPackageName = applicationPackageName
-    )
 
     open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker =
         MeteredConnectionCheckerImpl(context)

@@ -2,13 +2,13 @@ package com.lelloman.common
 
 import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.logger.LoggerFactoryImpl
-import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.common.viewmodel.command.AnimationCommand
+import com.lelloman.common.viewmodel.command.Command
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test
@@ -41,12 +41,12 @@ class BaseViewModelTest {
         val tester = tested.commands.test()
 
         for (i in 0 until nEvents) {
-            tested.callNavigate(object : NavigationEvent {})
+            tested.callEmitCommand(object : Command {})
         }
 
         tester.assertValueCount(nEvents)
         for (i in 0 until nEvents) {
-            tester.assertValueAt(i) { it is NavigationEvent }
+            tester.assertValueAt(i) { it is Command }
         }
     }
 
@@ -92,7 +92,7 @@ class BaseViewModelTest {
     }
 
     private class BaseViewModelImpl(dependencies: BaseViewModel.Dependencies) : BaseViewModel(dependencies) {
-        fun callNavigate(navigationEvent: NavigationEvent) = super.navigate(navigationEvent)
-        fun callAnimate(event: AnimationCommand) = super.animate(event)
+        fun callEmitCommand(command: Command) = super.emitCommand(command)
+        fun callAnimate(command: AnimationCommand) = super.animate(command)
     }
 }

@@ -1,9 +1,7 @@
 package com.lelloman.demoapp.ui.webview
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityWebViewBinding
@@ -28,10 +26,8 @@ class WebViewActivity : BaseActivity<WebViewViewModel, ActivityWebViewBinding>()
     }
 
     companion object {
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                context.startActivity(Intent(context, WebViewActivity::class.java))
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, WebViewActivity::class.java))
         }
     }
 }
