@@ -18,14 +18,15 @@ import com.lelloman.common.R
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.navigation.CloseScreenViewActionEvent
+import com.lelloman.common.navigation.CloseScreenCommand
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.common.utils.StubViewDataBinding
-import com.lelloman.common.view.actionevent.*
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.command.*
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
 
@@ -47,13 +48,16 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private val pendingActivityResultCodes = mutableSetOf<Int>()
 
-    private val viewActionEventSubscriptions = CompositeDisposable()
+    private lateinit var viewModelCommandsSubscription: Disposable
     private val themeChangedEventsSubscriptions = CompositeDisposable()
 
     protected abstract val layoutResId: Int
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected val loggerFactory: LoggerFactory by inject()
+    @Suppress("MemberVisibilityCanBePrivate")
     protected val ioScheduler: Scheduler by inject(IoScheduler)
+    @Suppress("MemberVisibilityCanBePrivate")
     protected val uiScheduler: Scheduler by inject(UiScheduler)
     protected val resourceProvider: ResourceProvider by inject()
     protected val semanticTimeProvider: SemanticTimeProvider by inject()
@@ -129,46 +133,45 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             )
         }
 
-        viewModel
-            .viewActionEvents
+        viewModelCommandsSubscription = viewModel
+            .commands
             .observeOn(uiScheduler)
             .subscribe {
-                logger.d("Received ViewActionEvent $it")
-                onReceivedViewActionEvent(it)
+                logger.d("Received ViewModelCommand $it")
+                handleCommand(it)
             }
-            .also { viewActionEventSubscriptions.add(it) }
     }
 
-    private fun onReceivedViewActionEvent(viewActionEvent: ViewActionEvent) {
-        when (viewActionEvent) {
+    private fun handleCommand(command: Command) {
+        when (command) {
             is NavigationEvent -> {
                 if (!pendingNavigationEvent) {
-                    navigationRouter.onNavigationEvent(this, viewActionEvent)
+                    navigationRouter.onNavigationEvent(this, command)
                     pendingNavigationEvent = true
                 }
             }
-            is CloseScreenViewActionEvent -> finish()
-            is ToastEvent -> showToast(viewActionEvent)
-            is SnackEvent -> showSnack(viewActionEvent)
-            is AnimationViewActionEvent -> onAnimationViewActionEvent(viewActionEvent)
-            is SwipePageActionEvent -> onSwipePageActionEvent(viewActionEvent)
-            is ShareFileViewActionEvent -> onShareFileViewActionEvent(viewActionEvent)
-            is PickFileActionEvent -> launchPickFileIntent(viewActionEvent)
-            is CloseKeyboard -> closeKeyboard()
-            is GoFullScreen -> goFullScreen()
-            else -> onUnhandledViewActionEvent(viewActionEvent)
+            is CloseScreenCommand -> finish()
+            is ShowToastCommand -> showToast(command)
+            is ShowSnackCommand -> showSnack(command)
+            is AnimationCommand -> onAnimationCommand(command)
+            is SwipePageCommand -> onSwipePageCommand(command)
+            is ShareFileCommand -> onShareFileCommand(command)
+            is PickFileCommand -> launchPickFileIntent(command)
+            is CloseKeyboardCommand -> closeKeyboard()
+            is GoFullScreenCommand -> goFullScreen()
+            else -> onUnhandledCommand(command)
         }
     }
 
-    protected open fun onUnhandledViewActionEvent(viewActionEvent: ViewActionEvent) {
+    protected open fun onUnhandledCommand(command: Command) = Unit
 
-    }
-
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun goFullScreen() {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun closeKeyboard() {
         val view = this.currentFocus
         if (view != null) {
@@ -198,22 +201,22 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onDestroy() {
         super.onDestroy()
         logger.i("onDestroy()")
-        viewActionEventSubscriptions.clear()
+        viewModelCommandsSubscription.dispose()
         themeChangedEventsSubscriptions.dispose()
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)
 
-    private fun onShareFileViewActionEvent(event: ShareFileViewActionEvent) {
-        val uri = FileProvider.getUriForFile(this, event.authority, event.file)
+    private fun onShareFileCommand(command: ShareFileCommand) {
+        val uri = FileProvider.getUriForFile(this, command.authority, command.file)
         val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra(Intent.EXTRA_STREAM, uri)
         intent.type = "*/*"
         startActivity(intent)
     }
 
-    private fun launchPickFileIntent(pickFileActionEvent: PickFileActionEvent) {
-        val requestCode = pickFileActionEvent.requestCode
+    private fun launchPickFileIntent(pickFileCommand: PickFileCommand) {
+        val requestCode = pickFileCommand.requestCode
         if (requestCode > 0xFF) {
             logger.w("launchPickFileIntent() called with value greater that 0xFF, $requestCode")
             return
@@ -259,13 +262,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
     }
 
-    protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
+    protected open fun onAnimationCommand(animationCommand: AnimationCommand) = Unit
 
-    }
-
-    protected open fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
-
-    }
+    protected open fun onSwipePageCommand(swipePageCommand: SwipePageCommand) = Unit
 
     override fun onSupportNavigateUp() = if (hasActionBarBackButton) {
         onBackPressed()
@@ -284,15 +283,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         viewModel.onRestoreInstanceState(savedInstanceState)
     }
 
-    private fun showToast(event: ToastEvent) {
-        Toast.makeText(this, event.message, event.duration).show()
+    private fun showToast(command: ShowToastCommand) {
+        Toast.makeText(this, command.message, command.duration).show()
     }
 
-    private fun showSnack(event: SnackEvent) {
-        val snack = Snackbar.make(coordinatorLayout, event.message, event.duration)
-        if (event.hasAction) {
-            snack.setAction(event.actionLabel) {
-                viewModel.onTokenAction(event.actionToken!!)
+    private fun showSnack(command: ShowSnackCommand) {
+        val snack = Snackbar.make(coordinatorLayout, command.message, command.duration)
+        if (command.hasAction) {
+            snack.setAction(command.actionLabel) {
+                viewModel.onTokenAction(command.actionToken!!)
             }
         }
         snack.show()

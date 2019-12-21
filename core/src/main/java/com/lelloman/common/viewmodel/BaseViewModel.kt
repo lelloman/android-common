@@ -14,10 +14,10 @@ import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.view.actionevent.AnimationViewActionEvent
-import com.lelloman.common.view.actionevent.SnackEvent
-import com.lelloman.common.view.actionevent.ToastEvent
-import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.common.viewmodel.command.AnimationCommand
+import com.lelloman.common.viewmodel.command.Command
+import com.lelloman.common.viewmodel.command.ShowSnackCommand
+import com.lelloman.common.viewmodel.command.ShowToastCommand
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -37,8 +37,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     private val subscriptions = CompositeDisposable()
     private val themeSubscriptions = CompositeDisposable()
 
-    private val viewActionEventsSubject: Subject<ViewActionEvent> = PublishSubject.create()
-    open val viewActionEvents: Observable<ViewActionEvent> = viewActionEventsSubject.hide()
+    private val commandsSubject: Subject<Command> = PublishSubject.create()
+    open val commands: Observable<Command> = commandsSubject.hide()
 
     private val themeChangedActionEventSubject = PublishSubject.create<AppTheme>()
     open val themeChangedEvents: Observable<AppTheme> = themeChangedActionEventSubject.hide()
@@ -75,26 +75,25 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     protected fun getString(@StringRes stringId: Int, vararg args: Any = emptyArray()) =
         resourceProvider.getString(stringId, *args)
 
-    protected fun emitViewActionEvent(event: ViewActionEvent) = viewActionEventsSubject.onNext(event)
+    protected fun emitCommand(command: Command) = commandsSubject.onNext(command)
 
-    protected fun navigate(navigationEvent: NavigationEvent) = emitViewActionEvent(navigationEvent)
+    protected fun navigate(navigationEvent: NavigationEvent) = emitCommand(navigationEvent)
 
     protected fun navigate(deepLink: DeepLink) =
-        emitViewActionEvent(DeepLinkNavigationEvent(deepLink))
+        emitCommand(DeepLinkNavigationEvent(deepLink))
 
-    protected fun navigate(navigationScreen: NavigationScreen) = navigate(DeepLink(navigationScreen))
+    protected fun navigate(navigationScreen: NavigationScreen) =
+        navigate(DeepLink(navigationScreen))
 
     protected fun navigateAndClose(navigationScreen: NavigationScreen) =
-        emitViewActionEvent(DeepLinkAndCloseNavigationEvent(DeepLink(navigationScreen)))
+        emitCommand(DeepLinkAndCloseNavigationEvent(DeepLink(navigationScreen)))
 
     @Deprecated(message = "Use closeScreen() instead")
-    protected fun navigateBack() = emitViewActionEvent(CloseScreenViewActionEvent)
+    protected fun navigateBack() = emitCommand(CloseScreenCommand)
 
-    protected fun closeScreen() = emitViewActionEvent(CloseScreenViewActionEvent)
+    protected fun closeScreen() = emitCommand(CloseScreenCommand)
 
-    protected fun animate(animationViewActionEvent: AnimationViewActionEvent) {
-        emitViewActionEvent(animationViewActionEvent)
-    }
+    protected fun animate(animationCommand: AnimationCommand) = emitCommand(animationCommand)
 
     open fun onCloseClicked() = closeScreen()
 
@@ -102,8 +101,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     protected fun longToast(message: String) = toast(message, Toast.LENGTH_LONG)
 
-    private fun toast(message: String, duration: Int) = emitViewActionEvent(
-        ToastEvent(
+    private fun toast(message: String, duration: Int) = emitCommand(
+        ShowToastCommand(
             message = message,
             duration = duration
         )
@@ -114,8 +113,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         actionLabel: String? = null,
         actionToken: String? = null
     ) {
-        emitViewActionEvent(
-            SnackEvent(
+        emitCommand(
+            ShowSnackCommand(
                 message = message,
                 actionLabel = actionLabel,
                 actionToken = actionToken,
