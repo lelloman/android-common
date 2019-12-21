@@ -7,9 +7,9 @@ import com.lelloman.common.webview.interceptor.pdf.PdfInterceptor
 import com.lelloman.demoapp.R
 import org.koin.dsl.module
 
-class CookedWebViewModule : KoinModuleFactory {
+class CookedWebViewModuleFactory : KoinModuleFactory {
 
-    override fun makeKoinModule() = module {
+    override fun makeKoinModule(override: Boolean) = module(override = override) {
         factory {
             AdBlockInterceptor(
                 blockedDomains = get<Context>().resources.getStringArray(R.array.blockedDomains).toSet()

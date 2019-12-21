@@ -7,9 +7,9 @@ import com.lelloman.demoapp.ui.webview.WebViewViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-class ViewModelModule : KoinModuleFactory {
+class ViewModelModuleFactory : KoinModuleFactory {
 
-    override fun makeKoinModule() = module {
+    override fun makeKoinModule(override: Boolean) = module(override = override) {
         viewModel {
             MainViewModel(
                 dependencies = get()

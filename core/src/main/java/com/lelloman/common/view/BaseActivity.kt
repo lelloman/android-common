@@ -52,13 +52,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected abstract val layoutResId: Int
 
-    private val loggerFactory: LoggerFactory by inject()
-    private val ioScheduler: Scheduler by inject(IoScheduler)
-    private val uiScheduler: Scheduler by inject(UiScheduler)
+    protected val loggerFactory: LoggerFactory by inject()
+    protected val ioScheduler: Scheduler by inject(IoScheduler)
+    protected val uiScheduler: Scheduler by inject(UiScheduler)
+    protected val resourceProvider: ResourceProvider by inject()
+    protected val semanticTimeProvider: SemanticTimeProvider by inject()
 
     private val navigationRouter: NavigationRouter by inject()
 
-    private val logger by lazy { loggerFactory.getLogger(javaClass) }
+    protected val logger by lazy { loggerFactory.getLogger(javaClass) }
 
     @Suppress("MemberVisibilityCanBePrivate")
     protected val statusBarHeight: Int

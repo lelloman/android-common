@@ -18,7 +18,7 @@ import org.koin.dsl.module
 
 open class BaseApplicationModuleFactory : KoinModuleFactory {
 
-    override fun makeKoinModule() = module {
+    override fun makeKoinModule(override: Boolean) = module(override = override) {
         single {
             provideApplicationInfoProvider(
                 context = get(),

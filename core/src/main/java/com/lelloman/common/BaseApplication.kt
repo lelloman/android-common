@@ -12,6 +12,13 @@ abstract class BaseApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        val moduleFactories = getBaseKoinModuleFactories().apply {
+            addAll(getKoinModuleFactories())
+        }
+        startKoin {
+            androidContext(this@BaseApplication)
+            modules(moduleFactories.map { it.makeKoinModule() })
+        }
         inject()
     }
 
@@ -19,20 +26,12 @@ abstract class BaseApplication : Application() {
 
     protected open fun makeBaseSettingsModule() = BaseSettingsModuleFactory()
 
-    protected open fun getKoinModuleFactories() = mutableListOf<KoinModuleFactory>()
+    protected open fun getKoinModuleFactories(): List<KoinModuleFactory> = mutableListOf()
 
     private fun getBaseKoinModuleFactories() = mutableListOf(
         makeBaseApplicationModule(),
         makeBaseSettingsModule()
     )
 
-    protected open fun inject() {
-        val moduleFactories = getBaseKoinModuleFactories().apply {
-            addAll(getKoinModuleFactories())
-        }
-        startKoin {
-            androidContext(this@BaseApplication)
-            modules(moduleFactories.map(KoinModuleFactory::makeKoinModule))
-        }
-    }
+    protected open fun inject() = Unit
 }

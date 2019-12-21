@@ -14,8 +14,8 @@ import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.Executors
 
-open class HttpModule : KoinModuleFactory {
-    override fun makeKoinModule() = module {
+open class HttpModuleFactory : KoinModuleFactory {
+    override fun makeKoinModule(override: Boolean) = module(override = override) {
 
         single {
             provideCookieJar()
