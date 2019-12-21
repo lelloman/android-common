@@ -9,15 +9,11 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.navigation.*
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.viewmodel.command.AnimationCommand
-import com.lelloman.common.viewmodel.command.Command
-import com.lelloman.common.viewmodel.command.ShowSnackCommand
-import com.lelloman.common.viewmodel.command.ShowToastCommand
+import com.lelloman.common.viewmodel.command.*
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -76,17 +72,6 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         resourceProvider.getString(stringId, *args)
 
     protected fun emitCommand(command: Command) = commandsSubject.onNext(command)
-
-    protected fun navigate(navigationEvent: NavigationEvent) = emitCommand(navigationEvent)
-
-    protected fun navigate(deepLink: DeepLink) =
-        emitCommand(DeepLinkNavigationEvent(deepLink))
-
-    protected fun navigate(navigationScreen: NavigationScreen) =
-        navigate(DeepLink(navigationScreen))
-
-    protected fun navigateAndClose(navigationScreen: NavigationScreen) =
-        emitCommand(DeepLinkAndCloseNavigationEvent(DeepLink(navigationScreen)))
 
     @Deprecated(message = "Use closeScreen() instead")
     protected fun navigateBack() = emitCommand(CloseScreenCommand)

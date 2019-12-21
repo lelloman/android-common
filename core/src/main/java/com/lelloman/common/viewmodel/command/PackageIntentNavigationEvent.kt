@@ -1,6 +1,6 @@
-package com.lelloman.common.navigation
+package com.lelloman.common.viewmodel.command
 
 class PackageIntentNavigationEvent(
     val packageName: String,
     val activityName: String?
-) : NavigationEvent
+) : Command

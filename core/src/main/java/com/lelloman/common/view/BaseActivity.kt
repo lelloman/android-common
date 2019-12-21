@@ -18,9 +18,6 @@ import com.lelloman.common.R
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.navigation.CloseScreenCommand
-import com.lelloman.common.navigation.NavigationEvent
-import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.common.viewmodel.command.*
@@ -61,8 +58,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     protected val uiScheduler: Scheduler by inject(UiScheduler)
     protected val resourceProvider: ResourceProvider by inject()
     protected val semanticTimeProvider: SemanticTimeProvider by inject()
-
-    private val navigationRouter: NavigationRouter by inject()
 
     protected val logger by lazy { loggerFactory.getLogger(javaClass) }
 
@@ -144,12 +139,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private fun handleCommand(command: Command) {
         when (command) {
-            is NavigationEvent -> {
-                if (!pendingNavigationEvent) {
-                    navigationRouter.onNavigationEvent(this, command)
-                    pendingNavigationEvent = true
-                }
-            }
             is CloseScreenCommand -> finish()
             is ShowToastCommand -> showToast(command)
             is ShowSnackCommand -> showSnack(command)

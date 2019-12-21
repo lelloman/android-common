@@ -1,11 +1,8 @@
 package com.lelloman.demoapp.ui.themeswitch
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.demoapp.R
@@ -33,16 +30,9 @@ class ThemeSwitchActivity : BaseActivity<ThemeSwitchViewModel, ActivityThemeSwit
     }
 
     companion object {
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, ThemeSwitchActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, ThemeSwitchActivity::class.java))
         }
-            internal set
     }
 
     class ThemesAdapter(
