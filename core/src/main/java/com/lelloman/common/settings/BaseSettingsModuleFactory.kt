@@ -8,8 +8,8 @@ import org.koin.dsl.module
 
 open class BaseSettingsModuleFactory : KoinModuleFactory {
 
-    override fun makeKoinModule() = module {
-        single<BaseApplicationSettings> {
+    override fun makeKoinModule(override: Boolean) = module(override = override) {
+        single {
             provideBaseApplicationSettings(
                 context = get(),
                 defaultAppTheme = get(DefaultAppTheme)
