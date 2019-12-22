@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.command.*
@@ -38,6 +39,13 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     private val themeChangedActionEventSubject = PublishSubject.create<AppTheme>()
     open val themeChangedEvents: Observable<AppTheme> = themeChangedActionEventSubject.hide()
+
+    private val throttledActions = mutableMapOf<String, Long>()
+    private val actionCoolDownMs = dependencies.actionCoolDownMs
+
+    private val timeProvider = dependencies.timeProvider
+
+    protected val logger = dependencies.loggerFactory.getLogger(javaClass)
 
     open fun onTokenAction(token: String) = Unit
 
@@ -112,6 +120,21 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         subscriptions.add(action.invoke())
     }
 
+    protected fun throttledAction(actionId: String = GENERAL_ACTION_ID, action: () -> Unit) {
+        val lastExecuted = throttledActions[actionId]
+        val now = timeProvider.nowUtcMs()
+        throttledActions
+            .filter { now - it.value >= actionCoolDownMs }
+            .forEach { throttledActions.remove(it.key) }
+
+        val shouldExecute = lastExecuted == null || now - lastExecuted >= actionCoolDownMs
+        if (shouldExecute) {
+            throttledActions[actionId] = timeProvider.nowUtcMs()
+            action()
+        }
+        logger.i("throttled action <$actionId> should execute $shouldExecute")
+    }
+
     override fun onCleared() {
         super.onCleared()
         subscriptions.dispose()
@@ -124,6 +147,12 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         val actionTokenProvider: ActionTokenProvider,
         val ioScheduler: Scheduler,
         val uiScheduler: Scheduler,
-        val loggerFactory: LoggerFactory
+        val loggerFactory: LoggerFactory,
+        val timeProvider: TimeProvider,
+        val actionCoolDownMs: Long
     )
+
+    companion object {
+        private const val GENERAL_ACTION_ID = "GeneralAction"
+    }
 }

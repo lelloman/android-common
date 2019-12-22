@@ -9,6 +9,7 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.common.viewmodel.command.AnimationCommand
 import com.lelloman.common.viewmodel.command.Command
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test
@@ -29,7 +30,9 @@ class BaseViewModelTest {
         actionTokenProvider = actionTokenProvider,
         ioScheduler = trampoline(),
         uiScheduler = trampoline(),
-        loggerFactory = LoggerFactoryImpl()
+        loggerFactory = LoggerFactoryImpl(),
+        timeProvider = mock(),
+        actionCoolDownMs = 0L
     )
 
     private val tested = BaseViewModelImpl(dependencies)
