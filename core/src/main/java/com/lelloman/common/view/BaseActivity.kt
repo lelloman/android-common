@@ -72,8 +72,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             return result
         }
 
-    private var pendingNavigationEvent = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logger.i("onCreate()")
@@ -177,7 +175,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onStart() {
         super.onStart()
         logger.i("onStart()")
-        pendingNavigationEvent = false
         viewModel.onViewShown()
     }
 

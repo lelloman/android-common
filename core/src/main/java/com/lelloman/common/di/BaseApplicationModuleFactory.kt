@@ -73,7 +73,9 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
                 actionTokenProvider = get(),
                 uiScheduler = get(UiScheduler),
                 ioScheduler = get(IoScheduler),
-                loggerFactory = get()
+                loggerFactory = get(),
+                timeProvider = get(),
+                actionCoolDownMs = get(ActionCoolDownMs)
             )
         }
         single {
@@ -93,6 +95,9 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
         }
         single(DefaultAppTheme) {
             provideDefaultAppTheme()
+        }
+        single(ActionCoolDownMs) {
+            provideActionCoolDownMs()
         }
     }
 
@@ -148,14 +153,18 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
         actionTokenProvider: ActionTokenProvider,
         uiScheduler: Scheduler,
         ioScheduler: Scheduler,
-        loggerFactory: LoggerFactory
+        loggerFactory: LoggerFactory,
+        timeProvider: TimeProvider,
+        actionCoolDownMs: Long
     ) = BaseViewModel.Dependencies(
         settings = baseApplicationSettings,
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider,
         uiScheduler = uiScheduler,
         ioScheduler = ioScheduler,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        timeProvider = timeProvider,
+        actionCoolDownMs = actionCoolDownMs
     )
 
     open fun provideBroadcastReceiverWrap(context: Context) =
@@ -172,4 +181,6 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
     open fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
 
     open fun provideDefaultAppTheme() = AppTheme.DEFAULT
+
+    open fun provideActionCoolDownMs() = 1_000L
 }
