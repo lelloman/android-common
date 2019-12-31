@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
@@ -235,7 +236,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private fun setupActionBar() {
         if (hasActionBar) {
-            setSupportActionBar(findViewById(R.id.toolbar))
+            val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            if(viewModel.currentTheme.isLight) {
+                toolbar.popupTheme = R.style.ThemeOverlay_AppCompat_Light
+            }
+            setSupportActionBar(toolbar)
         } else {
             findViewById<AppBarLayout>(R.id.app_bar_layout).visibility = View.GONE
         }

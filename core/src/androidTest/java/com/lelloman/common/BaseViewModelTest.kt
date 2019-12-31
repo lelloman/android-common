@@ -89,9 +89,9 @@ class BaseViewModelTest {
     }
 
     private companion object {
-        val DEFAULT_THEME = AppTheme.LIGHT
-        val NON_DEFAULT_THEME1 = AppTheme.DARCULA
-        val NON_DEFAULT_THEME2 = AppTheme.MOCKITO
+        val DEFAULT_THEME = AppTheme("Light", 1, true)
+        val NON_DEFAULT_THEME1 = AppTheme("Darcula", 2, false)
+        val NON_DEFAULT_THEME2 = AppTheme("Mockito", 3, true)
     }
 
     private class BaseViewModelImpl(dependencies: BaseViewModel.Dependencies) : BaseViewModel(dependencies) {

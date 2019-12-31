@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.AppThemes
 import com.lelloman.common.viewmodel.BaseViewModel
 
 class ThemeSwitchViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
@@ -17,8 +18,8 @@ class ThemeSwitchViewModel(dependencies: Dependencies) : BaseViewModel(dependenc
                 .observeOn(uiScheduler)
                 .subscribe { selectedTheme ->
                     mutableThemes.postValue(
-                        AppTheme
-                            .values()
+                        AppThemes
+                            .themes
                             .toList()
                             .mapIndexed { index, appTheme ->
                                 ThemeListItem(
@@ -31,7 +32,6 @@ class ThemeSwitchViewModel(dependencies: Dependencies) : BaseViewModel(dependenc
                 }
         }
     }
-
     val themes: LiveData<List<ThemeListItem>> = mutableThemes
 
     fun onThemeClicked(appTheme: AppTheme) {

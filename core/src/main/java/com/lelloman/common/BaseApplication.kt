@@ -5,6 +5,8 @@ import android.content.Context
 import com.lelloman.common.di.BaseApplicationModuleFactory
 import com.lelloman.common.di.KoinModuleFactory
 import com.lelloman.common.settings.BaseSettingsModuleFactory
+import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.AppThemes
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,6 +14,7 @@ abstract class BaseApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        AppThemes.addThemes(getThemes())
         val moduleFactories = getBaseKoinModuleFactories().apply {
             addAll(getKoinModuleFactories())
         }
@@ -21,6 +24,14 @@ abstract class BaseApplication : Application() {
         }
         inject()
     }
+
+    protected open fun getThemes() = mutableSetOf(
+        AppTheme("Light" , R.style.CustomTheme_Light, true),
+        AppTheme("Darcula" , R.style.CustomTheme_Darcula, false),
+        AppTheme("Mockito" , R.style.CustomTheme_Mockito, true),
+        AppTheme("Black" , R.style.CustomTheme_Black, false),
+        AppTheme("Forest" , R.style.CustomTheme_Forest, true)
+    )
 
     protected open fun makeBaseApplicationModule() = BaseApplicationModuleFactory()
 

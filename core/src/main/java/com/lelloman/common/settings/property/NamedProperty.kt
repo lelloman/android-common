@@ -3,26 +3,26 @@ package com.lelloman.common.settings.property
 import android.content.SharedPreferences
 import com.lelloman.common.utils.model.Named
 
-fun <T : Named> SharedPreferences.enumProperty(
+fun <T : Named> SharedPreferences.namedProperty(
     key: String,
     default: T,
-    stringToEnum: (String) -> T
-) = EnumProperty(
+    nameToObject: (String) -> T
+) = NamedProperty(
     key = key,
     default = default,
-    stringToEnum = stringToEnum,
+    nameToObject = nameToObject,
     prefs = this
 )
 
-class EnumProperty<T : Named>(
+class NamedProperty<T : Named>(
     key: String,
     default: T,
     prefs: SharedPreferences,
-    private val stringToEnum: (String) -> T
+    private val nameToObject: (String) -> T
 ) : PrefsProperty<T>(key, default, prefs) {
 
     override fun getValueFromPrefs(prefs: SharedPreferences): T =
-        stringToEnum.invoke(prefs.getString(key, default.name)!!)
+        nameToObject(prefs.getString(key, default.name)!!)
 
     override fun putValueInPrefs(editor: SharedPreferences.Editor, value: T) {
         editor.putString(key, value.name)
