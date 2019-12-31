@@ -47,6 +47,10 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     protected val logger = dependencies.loggerFactory.getLogger(javaClass)
 
+    val currentTheme: AppTheme get() = settings
+        .appTheme
+        .blockingFirst()
+
     open fun onTokenAction(token: String) = Unit
 
     open fun onSetupTheme(themeSetter: (AppTheme) -> Unit) {

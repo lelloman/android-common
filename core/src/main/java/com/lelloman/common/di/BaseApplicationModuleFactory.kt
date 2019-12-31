@@ -180,7 +180,7 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
 
     open fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
 
-    open fun provideDefaultAppTheme() = AppTheme.DEFAULT
+    open fun provideDefaultAppTheme() = AppThemes["Light"]
 
     open fun provideActionCoolDownMs() = 1_000L
 }

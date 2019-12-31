@@ -2,8 +2,9 @@ package com.lelloman.common.settings
 
 import android.content.Context
 import com.lelloman.common.settings.property.booleanProperty
-import com.lelloman.common.settings.property.enumProperty
+import com.lelloman.common.settings.property.namedProperty
 import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.AppThemes
 import io.reactivex.Observable
 
 interface BaseApplicationSettings {
@@ -35,7 +36,10 @@ internal class BaseApplicationSettingsImpl(
     defaultAppTheme: AppTheme
 ) : BaseApplicationSettings {
 
-    private val prefs = context.getSharedPreferences(BaseApplicationSettings.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(
+        BaseApplicationSettings.SHARED_PREFS_NAME,
+        Context.MODE_PRIVATE
+    )
 
     private val useMeteredNetworkProperty = prefs
         .booleanProperty(
@@ -44,10 +48,10 @@ internal class BaseApplicationSettingsImpl(
         )
 
     private val appThemeProperty = prefs
-        .enumProperty(
+        .namedProperty(
             BaseApplicationSettings.KEY_APP_THEME,
             defaultAppTheme,
-            AppTheme.Companion::fromName
+            AppThemes::get
         )
 
     override val useMeteredNetwork = useMeteredNetworkProperty.observable

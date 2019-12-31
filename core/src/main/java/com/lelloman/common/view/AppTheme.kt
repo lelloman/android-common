@@ -1,29 +1,27 @@
 package com.lelloman.common.view
 
 import androidx.annotation.StyleRes
-import com.lelloman.common.R
 import com.lelloman.common.utils.model.Named
 
-enum class AppTheme(
-    @StyleRes val resId: Int
-) : Named {
-    LIGHT(R.style.CustomTheme_Light),
-    DARCULA(R.style.CustomTheme_Darcula),
-    MOCKITO(R.style.CustomTheme_Mockito),
-    BLACK(R.style.CustomTheme_Black),
-    FOREST(R.style.CustomTheme_Forest);
+data class AppTheme(
+    override val name: String,
+    @StyleRes val resId: Int,
+    val isLight: Boolean
+) : Named
 
-    companion object {
+object AppThemes {
 
-        val DEFAULT = LIGHT
+    private val mutableThemes = mutableSetOf<AppTheme>()
+    val themes: Set<AppTheme> get() = mutableThemes
 
-        private val namesMap = values().associateBy(AppTheme::name)
-
-        fun fromName(name: String): AppTheme =
-            if (namesMap.containsKey(name)) {
-                namesMap[name] ?: DEFAULT
-            } else {
-                DEFAULT
+    fun addThemes(newThemes: Set<AppTheme>) {
+        newThemes.forEach { newTheme ->
+            if (mutableThemes.any { it.name == newTheme.name }) {
+                throw IllegalArgumentException("Theme with name ${newTheme.name} already registered!")
             }
+            mutableThemes.add(newTheme)
+        }
     }
+
+    operator fun get(name: String) = mutableThemes.firstOrNull { it.name == name } ?: mutableThemes.first()
 }
