@@ -2,6 +2,7 @@ package com.lelloman.common.utils
 
 import android.content.Context
 import android.graphics.Point
+import android.os.Build
 import android.view.WindowManager
 import com.lelloman.common.utils.model.NavigationBarSpecs
 import com.lelloman.common.utils.model.Position
@@ -37,6 +38,10 @@ class NavigationBarDetector(private val context: Context) {
     }
 
     private fun getRealScreenSize() = Point().apply {
-        windowManager.defaultDisplay.getRealSize(this)
+        if (Build.VERSION.SDK_INT > 16) {
+            windowManager.defaultDisplay.getRealSize(this)
+        } else {
+            windowManager.defaultDisplay.getSize(this)
+        }
     }
 }
