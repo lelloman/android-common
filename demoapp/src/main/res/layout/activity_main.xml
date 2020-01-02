@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
                 name="viewModel"
-                type="com.lelloman.demoapp.ui.main.MainViewModel"/>
+                type="com.lelloman.demoapp.ui.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,27 +15,27 @@
             android:layout_height="match_parent"
             tools:context=".ui.main.MainActivity">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_theme_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="THEME SWITCH"
                 android:onClick="@{(_) -> viewModel.onThemeSwitchClicked()}"
+                android:text="THEME SWITCH"
                 app:layout_constraintBottom_toTopOf="@+id/button_web_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_web_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WEBVIEW"
                 android:onClick="@{(_) -> viewModel.onWebViewClicked()}"
+                android:text="WEBVIEW"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_theme_switch"/>
+                app:layout_constraintTop_toBottomOf="@+id/button_theme_switch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
