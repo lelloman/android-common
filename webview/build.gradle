@@ -1,7 +1,9 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-
+    defaultConfig {
+        minSdkVersion 21
+    }
     dataBinding {
         enabled = true
     }

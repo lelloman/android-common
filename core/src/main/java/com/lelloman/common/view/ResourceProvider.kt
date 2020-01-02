@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.ArrayRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.res.ResourcesCompat
 
 interface ResourceProvider {
     fun getString(@StringRes stringId: Int, vararg args: Any): String
@@ -23,5 +24,5 @@ class ResourceProviderImpl(private val context: Context) : ResourceProvider {
         resources.getStringArray(arrayId)
 
     override fun getDrawable(drawableId: Int): Drawable =
-        resources.getDrawable(drawableId, null)
+        ResourcesCompat.getDrawable(resources, drawableId, null)!!
 }
