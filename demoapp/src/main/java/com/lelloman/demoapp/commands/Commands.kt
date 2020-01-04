@@ -5,3 +5,5 @@ import com.lelloman.common.viewmodel.command.Command
 object OpenThemesSwitchScreenCommand : Command
 
 object OpenWebViewScreenCommand : Command
+
+object OpenScrollBehaviorScreenCommand : Command
