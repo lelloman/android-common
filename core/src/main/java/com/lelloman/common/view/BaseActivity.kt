@@ -57,7 +57,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasRootContainer = true
 
-    protected open val hasActionbarHideBehavior = true
+    protected open val hasActionbarHideBehavior = false
 
     protected abstract val layoutResId: Int
 
