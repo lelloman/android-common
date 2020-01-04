@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,7 +17,9 @@ import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
 import com.lelloman.common.di.qualifiers.IoScheduler
@@ -50,6 +55,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private lateinit var viewModelCommandsSubscription: Disposable
     private val themeChangedEventsSubscriptions = CompositeDisposable()
 
+    protected open val hasRootContainer = true
+
     protected abstract val layoutResId: Int
 
     @Suppress("MemberVisibilityCanBePrivate")
@@ -74,6 +81,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             return result
         }
 
+    protected val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logger.i("onCreate()")
@@ -97,8 +106,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         if (hasBaseLayout && hasLayout) {
             setContentView(R.layout.activity_base)
             setupActionBar()
-            coordinatorLayout = findViewById(R.id.coordinator_layout)
-            binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
+            coordinatorLayout = findViewById(R.id.coordinatorLayout)
+            val rootContainer = if (hasRootContainer) {
+                FrameLayout(this).apply {
+                    val mp = ViewGroup.LayoutParams.MATCH_PARENT
+                    layoutParams = ViewGroup.LayoutParams(mp, mp)
+                    setPadding(0, getToolbarHeight(), 0, 0)
+                    coordinatorLayout.addView(this)
+                }
+            } else {
+                coordinatorLayout
+            }
+            binding = DataBindingUtil.inflate(layoutInflater, layoutResId, rootContainer, true)
         } else if (hasLayout) {
             binding = DataBindingUtil.setContentView(this, layoutResId)
         } else {
@@ -239,6 +258,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    private fun getToolbarHeight(): Int {
+        val tv = TypedValue()
+        return if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics())
+        } else {
+            0
+        }
+    }
+
     private fun setupActionBar() {
         if (hasActionBar) {
             val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -277,6 +305,19 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         viewModel.onRestoreInstanceState(savedInstanceState)
+    }
+
+    protected fun hideFabOnScroll(fab: FloatingActionButton, recyclerView: RecyclerView) {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 || dy < 0 && fab.isShown) fab.hide()
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) fab.show()
+            }
+        })
     }
 
     private fun showToast(command: ShowToastCommand) {

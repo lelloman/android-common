@@ -2,6 +2,7 @@ package com.lelloman.demoapp.di
 
 import com.lelloman.common.di.KoinModuleFactory
 import com.lelloman.demoapp.ui.main.MainViewModel
+import com.lelloman.demoapp.ui.scrollbehavior.ScrollBehaviorViewModel
 import com.lelloman.demoapp.ui.themeswitch.ThemeSwitchViewModel
 import com.lelloman.demoapp.ui.webview.WebViewViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -14,6 +15,9 @@ class ViewModelModuleFactory : KoinModuleFactory {
             MainViewModel(
                 dependencies = get()
             )
+        }
+        viewModel {
+            ScrollBehaviorViewModel(dependencies = get())
         }
         viewModel {
             ThemeSwitchViewModel(
