@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.demoapp.R
 import com.lelloman.demoapp.databinding.ActivityScrollBehaviorBinding
@@ -32,9 +31,6 @@ class ScrollBehaviorActivity :
         binding.viewModel = viewModel
         binding.recyclerView.adapter = Adapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        val params = toolbar.layoutParams as AppBarLayout.LayoutParams
-        params.scrollFlags = (AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS)
         hideFabOnScroll(binding.fab, binding.recyclerView)
     }
 

@@ -57,6 +57,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasRootContainer = true
 
+    protected open val hasActionbarHideBehavior = true
+
     protected abstract val layoutResId: Int
 
     @Suppress("MemberVisibilityCanBePrivate")
@@ -276,6 +278,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 toolbar.popupTheme = R.style.ThemeOverlay_AppCompat_Light
             }
             setSupportActionBar(toolbar)
+            if (hasActionbarHideBehavior) {
+                val params = toolbar.layoutParams as AppBarLayout.LayoutParams
+                params.scrollFlags =
+                    AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+            }
         } else {
             findViewById<AppBarLayout>(R.id.app_bar_layout).visibility = View.GONE
         }
