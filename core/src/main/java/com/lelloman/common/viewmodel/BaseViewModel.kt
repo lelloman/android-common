@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.logger.LoggerFactory
@@ -36,6 +38,9 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     private val commandsSubject: Subject<Command> = PublishSubject.create()
     open val commands: Observable<Command> = commandsSubject.hide()
+
+    private val mutableScreenTitle = MutableLiveData<String>()
+    val screenTitle: LiveData<String> = mutableScreenTitle
 
     private val themeChangedActionEventSubject = PublishSubject.create<AppTheme>()
     open val themeChangedEvents: Observable<AppTheme> = themeChangedActionEventSubject.hide()
@@ -137,6 +142,10 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
             action()
         }
         logger.i("throttled action <$actionId> should execute $shouldExecute")
+    }
+
+    protected fun setScreenTitle(title: String) {
+        mutableScreenTitle.value = title
     }
 
     override fun onCleared() {

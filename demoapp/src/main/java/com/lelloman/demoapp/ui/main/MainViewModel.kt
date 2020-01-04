@@ -12,4 +12,13 @@ class MainViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
     fun onWebViewClicked() = emitCommand(OpenWebViewScreenCommand)
 
     fun onShowSnackClicked() = emitCommand(ShowSnackCommand("Hello Snackbar"))
+
+    fun onChangeScreenTitleClicked() = throttledAction {
+        val title = if (screenTitle.value == "New title!") {
+            "Yet another title!"
+        } else {
+            "New title!"
+        }
+        setScreenTitle(title)
+    }
 }
