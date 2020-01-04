@@ -111,7 +111,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 FrameLayout(this).apply {
                     val mp = ViewGroup.LayoutParams.MATCH_PARENT
                     layoutParams = ViewGroup.LayoutParams(mp, mp)
-                    setPadding(0, getToolbarHeight(), 0, 0)
+                    if (hasActionBar) {
+                        setPadding(0, getToolbarHeight(), 0, 0)
+                    }
                     coordinatorLayout.addView(this)
                 }
             } else {
