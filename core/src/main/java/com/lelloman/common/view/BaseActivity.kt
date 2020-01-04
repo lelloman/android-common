@@ -13,6 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
@@ -134,6 +135,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 logger.d("Received ViewModelCommand $it")
                 handleCommand(it)
             }
+
+        viewModel.screenTitle.observe(this, Observer {
+            if (it != null) title = it
+        })
     }
 
     private fun handleCommand(command: Command) {
@@ -237,7 +242,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     private fun setupActionBar() {
         if (hasActionBar) {
             val toolbar = findViewById<Toolbar>(R.id.toolbar)
-            if(viewModel.currentTheme.isLight) {
+            if (viewModel.currentTheme.isLight) {
                 toolbar.popupTheme = R.style.ThemeOverlay_AppCompat_Light
             }
             setSupportActionBar(toolbar)

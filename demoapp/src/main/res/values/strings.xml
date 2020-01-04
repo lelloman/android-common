@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DemoApp</string>
     <string name="show_snackbar_action">Show Snackbar</string>
+    <string name="change_screen_title_action">Change screen title</string>
 </resources>

@@ -32,6 +32,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             viewModel.onShowSnackClicked()
             true
         }
+        R.id.actionChangeScreenTitle -> {
+            viewModel.onChangeScreenTitleClicked()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
     override fun onUnhandledCommand(command: Command) = when (command) {
