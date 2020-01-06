@@ -164,7 +164,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         })
     }
 
-    private fun handleCommand(command: Command) {
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun handleCommand(command: Command) {
         when (command) {
             is CloseScreenCommand -> finish()
             is ShowToastCommand -> showToast(command)
