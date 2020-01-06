@@ -22,6 +22,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     private lateinit var commandsSubscription: Disposable
 
+    protected lateinit var binding: DB
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val baseActivity = context as? BaseActivity<*, *>
@@ -45,7 +47,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<DB>(inflater, layoutResId, container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         setViewModel(binding, viewModel)
         binding.lifecycleOwner = this
         return binding.root
