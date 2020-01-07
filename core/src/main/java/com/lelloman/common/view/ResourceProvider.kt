@@ -4,11 +4,13 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.annotation.ArrayRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 
 interface ResourceProvider {
     fun getString(@StringRes stringId: Int, vararg args: Any): String
+    fun getQuantityString(@PluralsRes resId: Int, quantity: Int, vararg formatArgs: Any): String
     fun getStringArray(@ArrayRes arrayId: Int): Array<String>
     fun getDrawable(@DrawableRes drawableId: Int): Drawable
 }
@@ -25,4 +27,7 @@ class ResourceProviderImpl(private val context: Context) : ResourceProvider {
 
     override fun getDrawable(drawableId: Int): Drawable =
         ResourcesCompat.getDrawable(resources, drawableId, null)!!
+
+    override fun getQuantityString(resId: Int, quantity: Int, vararg formatArgs: Any) =
+        resources.getQuantityString(resId, quantity, *formatArgs)
 }
