@@ -2,10 +2,7 @@ package com.lelloman.common.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import androidx.annotation.ArrayRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.PluralsRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import androidx.core.content.res.ResourcesCompat
 
 interface ResourceProvider {
@@ -13,6 +10,7 @@ interface ResourceProvider {
     fun getQuantityString(@PluralsRes resId: Int, quantity: Int, vararg formatArgs: Any): String
     fun getStringArray(@ArrayRes arrayId: Int): Array<String>
     fun getDrawable(@DrawableRes drawableId: Int): Drawable
+    fun getColor(@ColorRes colorId: Int): Int
 }
 
 class ResourceProviderImpl(private val context: Context) : ResourceProvider {
@@ -30,4 +28,6 @@ class ResourceProviderImpl(private val context: Context) : ResourceProvider {
 
     override fun getQuantityString(resId: Int, quantity: Int, vararg formatArgs: Any) =
         resources.getQuantityString(resId, quantity, *formatArgs)
+
+    override fun getColor(colorId: Int) = ResourcesCompat.getColor(resources, colorId, null)
 }

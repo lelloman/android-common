@@ -21,6 +21,8 @@ class MockResourceProvider(
         Array(defaultStringArrayLength) { "$it" }
     }
 
+    override fun getColor(colorId: Int) = colorId
+
     fun registerStringArray(arrayId: Int, array: Array<String>) {
         arraysMap[arrayId] = array
     }
