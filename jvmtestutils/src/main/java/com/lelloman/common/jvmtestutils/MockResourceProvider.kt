@@ -12,6 +12,9 @@ class MockResourceProvider(
     override fun getString(stringId: Int, vararg args: Any) =
         "$stringId${args.joinToString(separator = "") { ":$it" }}"
 
+    override fun getQuantityString(resId: Int, quantity: Int, vararg formatArgs: Any): String =
+        "$resId:$quantity${formatArgs.joinToString(separator = "") { ":$it" }}"
+
     override fun getStringArray(arrayId: Int) = if (arraysMap.containsKey(arrayId)) {
         arraysMap[arrayId]!!
     } else {
