@@ -24,7 +24,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     protected lateinit var binding: DB
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         val baseActivity = context as? BaseActivity<*, *>
             ?: error("BaseFragment must be attached to a BaseActivity")
