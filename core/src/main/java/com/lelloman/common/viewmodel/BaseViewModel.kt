@@ -6,14 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
+import com.lelloman.common.utils.StringLiveData
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.immutable
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.command.*
@@ -39,8 +39,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     private val commandsSubject: Subject<Command> = PublishSubject.create()
     open val commands: Observable<Command> = commandsSubject.hide()
 
-    private val mutableScreenTitle = MutableLiveData<String>()
-    val screenTitle: LiveData<String> = mutableScreenTitle
+    private val mutableScreenTitle = StringLiveData()
+    val screenTitle = mutableScreenTitle.immutable
 
     private val themeChangedActionEventSubject = PublishSubject.create<AppTheme>()
     open val themeChangedEvents: Observable<AppTheme> = themeChangedActionEventSubject.hide()
