@@ -4,8 +4,7 @@ import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.view.WindowManager
-import com.lelloman.common.utils.model.NavigationBarSpecs
-import com.lelloman.common.utils.model.Position
+import com.lelloman.common.data.model.Position
 
 @Suppress("unused")
 class NavigationBarDetector(private val context: Context) {
@@ -29,7 +28,11 @@ class NavigationBarDetector(private val context: Context) {
                 height = realScreenSize.y - appUsableSize.y,
                 position = Position.BOTTOM
             )
-            else -> NavigationBarSpecs(0, 0, Position.NONE)
+            else -> NavigationBarSpecs(
+                0,
+                0,
+                Position.NONE
+            )
         }
     }
 

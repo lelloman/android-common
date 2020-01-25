@@ -1,4 +1,4 @@
-package com.lelloman.common.utils.model
+package com.lelloman.common.data.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

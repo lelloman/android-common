@@ -22,6 +22,8 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.lelloman.common.R
+import com.lelloman.common.data.ResourceProvider
+import com.lelloman.common.data.SemanticTimeProvider
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory

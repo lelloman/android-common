@@ -1,8 +1,8 @@
-package com.lelloman.common.settings
+package com.lelloman.common.data.settings
 
 import android.content.Context
-import com.lelloman.common.settings.property.booleanProperty
-import com.lelloman.common.settings.property.namedProperty
+import com.lelloman.common.data.settings.property.booleanProperty
+import com.lelloman.common.data.settings.property.namedProperty
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.AppThemes
 import io.reactivex.Observable

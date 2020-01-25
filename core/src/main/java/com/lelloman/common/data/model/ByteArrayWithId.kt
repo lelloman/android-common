@@ -1,4 +1,4 @@
-package com.lelloman.common.utils.model
+package com.lelloman.common.data.model
 
 @Suppress("ArrayInDataClass", "unused")
 data class ByteArrayWithId(

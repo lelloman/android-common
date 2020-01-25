@@ -1,6 +1,6 @@
 package com.lelloman.common.logger
 
-import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.data.TimeProvider
 import java.io.PrintWriter
 import java.text.SimpleDateFormat
 import java.util.*

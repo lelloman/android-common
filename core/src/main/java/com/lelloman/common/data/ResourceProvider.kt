@@ -1,4 +1,4 @@
-package com.lelloman.common.view
+package com.lelloman.common.data
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -13,7 +13,8 @@ interface ResourceProvider {
     fun getColor(@ColorRes colorId: Int): Int
 }
 
-class ResourceProviderImpl(private val context: Context) : ResourceProvider {
+class ResourceProviderImpl(private val context: Context) :
+    ResourceProvider {
 
     private val resources by lazy { context.resources }
 

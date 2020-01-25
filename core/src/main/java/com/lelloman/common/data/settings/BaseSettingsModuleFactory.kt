@@ -1,4 +1,4 @@
-package com.lelloman.common.settings
+package com.lelloman.common.data.settings
 
 import android.content.Context
 import com.lelloman.common.di.KoinModuleFactory

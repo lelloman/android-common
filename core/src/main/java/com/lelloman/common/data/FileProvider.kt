@@ -1,4 +1,4 @@
-package com.lelloman.common.view
+package com.lelloman.common.data
 
 import android.content.Context
 import io.reactivex.Completable
