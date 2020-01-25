@@ -176,6 +176,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             is PickFileCommand -> launchPickFileIntent(command)
             is CloseKeyboardCommand -> closeKeyboard()
             is GoFullScreenCommand -> goFullScreen()
+            is ReturnResultOk -> {
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
             else -> onUnhandledCommand(command)
         }
     }
