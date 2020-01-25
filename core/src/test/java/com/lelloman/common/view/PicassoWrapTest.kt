@@ -1,6 +1,7 @@
 package com.lelloman.common.view
 
 import android.widget.ImageView
+import com.lelloman.common.data.MeteredConnectionChecker
 import com.nhaarman.mockitokotlin2.*
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.RequestCreator

@@ -1,11 +1,11 @@
 package com.lelloman.common
 
 import com.lelloman.common.androidtestutils.whenever
+import com.lelloman.common.data.ResourceProvider
+import com.lelloman.common.data.settings.BaseApplicationSettings
 import com.lelloman.common.logger.LoggerFactoryImpl
-import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.common.viewmodel.command.AnimationCommand
 import com.lelloman.common.viewmodel.command.Command

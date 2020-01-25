@@ -1,7 +1,6 @@
-package com.lelloman.common.view
+package com.lelloman.common.data
 
 import com.lelloman.common.R
-import com.lelloman.common.utils.TimeProvider
 import java.text.SimpleDateFormat
 import java.util.*
 

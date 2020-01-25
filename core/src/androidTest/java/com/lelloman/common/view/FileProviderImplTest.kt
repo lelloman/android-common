@@ -1,6 +1,7 @@
 package com.lelloman.common.view
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.lelloman.common.data.FileProviderImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before

@@ -1,9 +1,9 @@
 package com.lelloman.common.http
 
+import com.lelloman.common.data.TimeProvider
 import com.lelloman.common.di.KoinModuleFactory
 import com.lelloman.common.http.internal.HttpClientImpl
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.utils.TimeProvider
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import okhttp3.CookieJar

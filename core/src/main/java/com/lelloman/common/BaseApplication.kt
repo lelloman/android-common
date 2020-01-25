@@ -2,9 +2,9 @@ package com.lelloman.common
 
 import android.app.Application
 import android.content.Context
+import com.lelloman.common.data.settings.BaseSettingsModuleFactory
 import com.lelloman.common.di.BaseApplicationModuleFactory
 import com.lelloman.common.di.KoinModuleFactory
-import com.lelloman.common.settings.BaseSettingsModuleFactory
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.AppThemes
 import org.koin.android.ext.koin.androidContext

@@ -1,4 +1,4 @@
-package com.lelloman.common.settings.property
+package com.lelloman.common.data.settings.property
 
 import android.content.SharedPreferences
 import io.reactivex.Observable

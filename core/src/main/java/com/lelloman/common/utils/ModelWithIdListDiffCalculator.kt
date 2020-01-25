@@ -1,7 +1,7 @@
 package com.lelloman.common.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.lelloman.common.utils.model.ModelWithId
+import com.lelloman.common.data.model.ModelWithId
 
 class ModelWithIdListDiffCalculator<T> : DiffUtil.Callback() {
 

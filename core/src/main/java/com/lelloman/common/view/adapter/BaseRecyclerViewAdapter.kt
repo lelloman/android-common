@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.lelloman.common.data.model.ModelWithId
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
-import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 
 abstract class BaseRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseListItemViewModel<ID, M>, DB : ViewDataBinding>(

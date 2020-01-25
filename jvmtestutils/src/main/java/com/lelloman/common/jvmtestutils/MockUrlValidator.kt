@@ -1,9 +1,10 @@
 package com.lelloman.common.jvmtestutils
 
-import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.data.UrlValidator
 import io.reactivex.Maybe
 
-class MockUrlValidator(action: MockUrlValidator.() -> Unit = {}) : UrlValidator {
+class MockUrlValidator(action: MockUrlValidator.() -> Unit = {}) :
+    UrlValidator {
 
     init {
         action.invoke(this)

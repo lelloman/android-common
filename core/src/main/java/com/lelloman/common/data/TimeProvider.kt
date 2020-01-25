@@ -1,7 +1,7 @@
-package com.lelloman.common.utils
+package com.lelloman.common.data
 
-import com.lelloman.common.utils.model.*
-import com.lelloman.common.utils.model.Date
+import com.lelloman.common.data.model.*
+import com.lelloman.common.data.model.Date
 import java.util.*
 
 interface TimeProvider {

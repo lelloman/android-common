@@ -1,12 +1,12 @@
 package com.lelloman.common.http.internal
 
+import com.lelloman.common.data.TimeProvider
 import com.lelloman.common.http.ContentType
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpClientException
 import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.utils.TimeProvider
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.Request

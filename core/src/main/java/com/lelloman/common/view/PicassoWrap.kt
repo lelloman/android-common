@@ -3,6 +3,7 @@ package com.lelloman.common.view
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.lelloman.common.BuildConfig
+import com.lelloman.common.data.MeteredConnectionChecker
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator

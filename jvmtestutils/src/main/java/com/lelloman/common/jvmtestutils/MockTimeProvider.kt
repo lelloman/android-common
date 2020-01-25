@@ -1,9 +1,10 @@
 package com.lelloman.common.jvmtestutils
 
-import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.utils.model.*
+import com.lelloman.common.data.TimeProvider
+import com.lelloman.common.data.model.*
 
-class MockTimeProvider(var now: Long = 0) : TimeProvider {
+class MockTimeProvider(var now: Long = 0) :
+    TimeProvider {
     override fun nowUtcMs() = now
 
     override fun now() = DateTime(

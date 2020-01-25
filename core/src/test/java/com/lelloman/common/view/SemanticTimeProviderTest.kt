@@ -1,11 +1,12 @@
 package com.lelloman.common.view
 
 import com.lelloman.common.R
+import com.lelloman.common.data.SemanticTimeProviderImpl
+import com.lelloman.common.data.TimeProvider
+import com.lelloman.common.data.model.Date
+import com.lelloman.common.data.model.DateTime
+import com.lelloman.common.data.model.Time
 import com.lelloman.common.jvmtestutils.MockResourceProvider
-import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.utils.model.Date
-import com.lelloman.common.utils.model.DateTime
-import com.lelloman.common.utils.model.Time
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test

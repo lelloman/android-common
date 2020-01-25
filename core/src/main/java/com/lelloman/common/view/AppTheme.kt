@@ -1,7 +1,7 @@
 package com.lelloman.common.view
 
 import androidx.annotation.StyleRes
-import com.lelloman.common.utils.model.Named
+import com.lelloman.common.data.model.Named
 
 data class AppTheme(
     override val name: String,

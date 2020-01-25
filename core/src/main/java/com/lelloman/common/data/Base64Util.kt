@@ -1,4 +1,4 @@
-package com.lelloman.common.utils
+package com.lelloman.common.data
 
 import android.util.Base64
 

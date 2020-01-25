@@ -1,7 +1,7 @@
 package com.lelloman.common.jvmtestutils
 
 import android.graphics.drawable.Drawable
-import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.data.ResourceProvider
 
 class MockResourceProvider(
     private var defaultStringArrayLength: Int = 10

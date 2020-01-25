@@ -1,6 +1,7 @@
 package com.lelloman.common.utils
 
-import com.lelloman.common.utils.model.DayOfTheWeek
+import com.lelloman.common.data.TimeProviderImpl
+import com.lelloman.common.data.model.DayOfTheWeek
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.text.SimpleDateFormat

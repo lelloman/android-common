@@ -3,11 +3,12 @@ package com.lelloman.common.di
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
+import com.lelloman.common.data.*
+import com.lelloman.common.data.settings.BaseApplicationSettings
 import com.lelloman.common.di.qualifiers.*
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
-import com.lelloman.common.settings.BaseApplicationSettings
-import com.lelloman.common.utils.*
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.*
 import com.lelloman.common.viewmodel.BaseViewModel
 import io.reactivex.Scheduler
@@ -104,10 +105,11 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
     open fun provideApplicationInfoProvider(
         context: Context,
         packageManager: PackageManager
-    ): ApplicationInfoProvider = ApplicationInfoProviderImpl(
-        context = context,
-        packageManager = packageManager
-    )
+    ): ApplicationInfoProvider =
+        ApplicationInfoProviderImpl(
+            context = context,
+            packageManager = packageManager
+        )
 
     open fun provideIoScheduler(): Scheduler = Schedulers.io()
 
@@ -117,7 +119,8 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
 
     open fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
 
-    open fun provideTimeProvider(): TimeProvider = TimeProviderImpl()
+    open fun provideTimeProvider(): TimeProvider =
+        TimeProviderImpl()
 
     open fun provideResourceProvider(context: Context): ResourceProvider =
         ResourceProviderImpl(context)
@@ -129,7 +132,8 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
 
     open fun provideActionTokenProvider() = ActionTokenProvider()
 
-    open fun provideUrlValidator(): UrlValidator = UrlValidatorImpl()
+    open fun provideUrlValidator(): UrlValidator =
+        UrlValidatorImpl()
 
     open fun providePicassoWrap(
         appSettings: BaseApplicationSettings,
@@ -142,10 +146,11 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
     open fun provideSemanticTimeProvider(
         timeProvider: TimeProvider,
         resourceProvider: ResourceProvider
-    ): SemanticTimeProvider = SemanticTimeProviderImpl(
-        timeProvider = timeProvider,
-        resourceProvider = resourceProvider
-    )
+    ): SemanticTimeProvider =
+        SemanticTimeProviderImpl(
+            timeProvider = timeProvider,
+            resourceProvider = resourceProvider
+        )
 
     open fun provideBaseViewModelDependencies(
         baseApplicationSettings: BaseApplicationSettings,
@@ -178,7 +183,8 @@ open class BaseApplicationModuleFactory : KoinModuleFactory {
     open fun provideContentUriOpener(context: Context): ContentUriOpener =
         ContentUriOpenerImpl(context)
 
-    open fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
+    open fun provideFileProvider(context: Context): FileProvider =
+        FileProviderImpl(context)
 
     open fun provideDefaultAppTheme() = AppThemes["Light"]
 

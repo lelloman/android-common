@@ -1,7 +1,7 @@
 package com.lelloman.common
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.common.data.UrlValidatorImpl
 import org.junit.Test
 
 @Suppress("SpellCheckingInspection")
