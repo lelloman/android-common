@@ -11,26 +11,22 @@ import com.lelloman.common.viewmodel.BaseViewModel
 class ThemeSwitchViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
     private val mutableThemes: MutableLiveData<List<ThemeListItem>> by LazyLiveData {
-        subscription {
-            settings
-                .appTheme
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .subscribe { selectedTheme ->
-                    mutableThemes.postValue(
-                        AppThemes
-                            .themes
-                            .toList()
-                            .mapIndexed { index, appTheme ->
-                                ThemeListItem(
-                                    id = index.toLong(),
-                                    theme = appTheme,
-                                    isEnabled = appTheme == selectedTheme
-                                )
-                            }
-                    )
-                }
-        }
+        settings
+            .appTheme
+            .viewModelSubscription { selectedTheme ->
+                mutableThemes.postValue(
+                    AppThemes
+                        .themes
+                        .toList()
+                        .mapIndexed { index, appTheme ->
+                            ThemeListItem(
+                                id = index.toLong(),
+                                theme = appTheme,
+                                isEnabled = appTheme == selectedTheme
+                            )
+                        }
+                )
+            }
     }
     val themes: LiveData<List<ThemeListItem>> = mutableThemes
 

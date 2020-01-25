@@ -17,8 +17,10 @@ import com.lelloman.common.utils.immutable
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.command.*
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
@@ -52,9 +54,10 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
 
     protected val logger = dependencies.loggerFactory.getLogger(javaClass)
 
-    val currentTheme: AppTheme get() = settings
-        .appTheme
-        .blockingFirst()
+    val currentTheme: AppTheme
+        get() = settings
+            .appTheme
+            .blockingFirst()
 
     open fun onTokenAction(token: String) = Unit
 
@@ -152,6 +155,71 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
         super.onCleared()
         subscriptions.dispose()
         themeSubscriptions.dispose()
+    }
+
+    protected fun <T> Single<T>.viewModelSubscription(
+        onSuccess: (T) -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess, onError)
+        }
+    }
+
+    protected fun <T> Single<T>.viewModelSubscription(onSuccess: (T) -> Unit) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess)
+        }
+    }
+
+    protected fun Completable.viewModelSubscription(
+        onSuccess: () -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess, onError)
+        }
+    }
+
+    protected fun Completable.viewModelSubscription(onSuccess: () -> Unit) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess)
+        }
+    }
+
+    protected fun Completable.viewModelSubscription() {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe()
+        }
+    }
+
+    protected fun <T> Observable<T>.viewModelSubscription(
+        onSuccess: (T) -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess, onError)
+        }
+    }
+
+    protected fun <T> Observable<T>.viewModelSubscription(onSuccess: (T) -> Unit) {
+        subscription {
+            subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(onSuccess)
+        }
     }
 
     class Dependencies(
