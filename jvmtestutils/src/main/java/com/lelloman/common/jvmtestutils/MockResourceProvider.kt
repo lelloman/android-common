@@ -2,6 +2,7 @@ package com.lelloman.common.jvmtestutils
 
 import android.graphics.drawable.Drawable
 import com.lelloman.common.data.ResourceProvider
+import com.lelloman.common.view.AppTheme
 
 class MockResourceProvider(
     private var defaultStringArrayLength: Int = 10
@@ -30,4 +31,6 @@ class MockResourceProvider(
     override fun getDrawable(drawableId: Int): Drawable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun resolveColorAttribute(attrId: Int, defaultValue: Int, appTheme: AppTheme?) = attrId
 }
