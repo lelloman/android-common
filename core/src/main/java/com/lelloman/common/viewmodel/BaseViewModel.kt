@@ -27,7 +27,9 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 
 @Suppress("MemberVisibilityCanBePrivate", "DeprecatedCallableAddReplaceWith")
-abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
+abstract class BaseViewModel(dependencies: Dependencies) :
+    ViewModel(),
+    ResourceProvider by dependencies.resourceProvider {
 
     protected val settings = dependencies.settings
     protected val ioScheduler = dependencies.ioScheduler
@@ -87,9 +89,6 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
     open fun onRestoreInstanceState(bundle: Bundle) = Unit
 
     protected fun makeActionToken() = actionTokenProvider.makeActionToken()
-
-    protected fun getString(@StringRes stringId: Int, vararg args: Any = emptyArray()) =
-        resourceProvider.getString(stringId, *args)
 
     protected fun emitCommand(command: Command) = commandsSubject.onNext(command)
 
