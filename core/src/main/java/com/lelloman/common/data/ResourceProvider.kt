@@ -13,6 +13,7 @@ interface ResourceProvider {
     fun getStringArray(@ArrayRes arrayId: Int): Array<String>
     fun getDrawable(@DrawableRes drawableId: Int): Drawable
     fun getColor(@ColorRes colorId: Int): Int
+    fun getInteger(@IntegerRes intId: Int): Int
     fun resolveColorAttribute(
         @AttrRes attrId: Int,
         defaultValue: Int,
@@ -38,6 +39,8 @@ class ResourceProviderImpl(private val context: Context) :
         resources.getQuantityString(resId, quantity, *formatArgs)
 
     override fun getColor(colorId: Int) = ResourcesCompat.getColor(resources, colorId, null)
+
+    override fun getInteger(intId: Int) = resources.getInteger(intId)
 
     override fun resolveColorAttribute(attrId: Int, defaultValue: Int, appTheme: AppTheme?): Int {
         val typedValue = TypedValue()

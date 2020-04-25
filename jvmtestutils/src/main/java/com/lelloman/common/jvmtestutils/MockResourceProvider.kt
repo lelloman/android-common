@@ -24,6 +24,8 @@ class MockResourceProvider(
 
     override fun getColor(colorId: Int) = colorId
 
+    override fun getInteger(intId: Int) = intId
+
     fun registerStringArray(arrayId: Int, array: Array<String>) {
         arraysMap[arrayId] = array
     }
